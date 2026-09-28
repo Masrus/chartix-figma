@@ -1,0 +1,832 @@
+
+:root{
+ color-scheme:dark;
+ --font:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+
+ /* --- ТЁМНАЯ ТЕМА (по умолчанию) ---
+    Токены семантические: названы по роли в интерфейсе, а не по цвету.
+    Светлая тема ниже переопределяет только их — ни одно правило не дублируется. */
+ --page:#0a0b0c;        /* полотно за приложением */
+ --bg:#121315;          /* фон рабочей области */
+ --surface:#1b1c1f;     /* панели */
+ --card:#17181b;        /* карточки поверх панелей */
+ --sunken:#161719;      /* вложенные карточки */
+ --sidebar:#151618;
+ --dock:#1c1d20;
+ --raised:#242529;      /* наведение */
+ --hover:rgba(255,255,255,.09); /* подсветка стеклянных контролов */
+ --control:#28292d;     /* поля ввода */
+ --control-line:#414247;
+ --line:#323337;
+ --line-strong:#46474b;
+ --track:#2c2d31;       /* жёлоб полосы прогресса */
+ --handle:#66676d;
+ --handle-on:#8a8d91;
+ --dot:#34363a;
+ --scrim:rgba(0,0,0,.66);
+ --shadow-soft:rgba(0,0,0,.2);
+ --shadow-deep:rgba(0,0,0,.6);
+
+ --text:#f3f2ef;
+ --muted:#a1a2a8;
+
+ --lime:#caff73;        /* заливка фирменного акцента */
+ --ink-accent:#caff73;  /* тот же акцент, но как цвет чернил: значки, штрихи, текст */
+ --on-lime:#162000;
+ --on-fill:#12241a;   /* текст поверх сплошной заливки роста/падения */     /* текст поверх заливки */
+ --accent-soft:#2b3324; /* подложка акцента */
+ --accent-edge:#3d4a30;
+ --accent-ink:#b9d69a;  /* текст на подложке акцента */
+ --green:#7ee2b0;
+ --red:#d9808f;
+
+ --bubble-in:#26272b;
+ --bubble-out:#38481f;
+ --bubble-out-ink:#f3f2ef;
+ --bubble-out-time:#b9cf93;
+
+ --term-bg:#0a0b0d;
+ --term-ink:#bdd1b1;
+
+ --av-bg:#30342b;
+ --av-gold-bg:#383025;  --av-gold-ink:#e5c88d;
+ --av-risk-bg:#2a303e;  --av-risk-ink:#adc3ff;
+ --av-info-bg:#2c3336;  --av-info-ink:#9fd2d8;
+ --rec-bg:#3a252b;      --rec-line:#d2808e;  --rec-ink:#ffb1b9;
+
+ /* график */
+ --grid:#2a2b2f;
+ --axis:#4a4b50;
+ --axis-ink:#919298;
+ --up:#7ee2b0;
+ --down:#b04a5c;
+ --draw:#caff73;
+ --draw-chip:#303a26;
+
+ /* стекло */
+ --glass:rgba(38,40,45,.55);
+ --glass-soft:rgba(32,34,38,.42);
+ --edge:rgba(255,255,255,.12);
+ --sheen:inset 0 1px 0 rgba(255,255,255,.14);
+ --lift:0 18px 46px rgba(0,0,0,.42);
+ --in:rgba(46,48,54,.72);
+ --wall-1:rgba(202,255,115,.13);
+ --wall-2:rgba(120,190,255,.10);
+ --wall-3:rgba(139,212,176,.10);
+ --chat-wall-1:rgba(202,255,115,.055);
+ --chat-wall-2:rgba(120,190,255,.05);
+}
+
+/* --- СВЕТЛАЯ ТЕМА ---
+   Не осветлённая тёмная: у светлой свои отношения слоёв — полотно серое,
+   карточки белые, тени мягче, а лайм уходит из линий в заливки,
+   потому что на белом он нечитаем. Для линий и текста — тёмно-оливковый. */
+:root[data-theme="light"]{
+ color-scheme:light;
+ /* Светлая тема держится не контрастом плоскостей, а волосяной гранью и мягкой тенью.
+    Серое полотно под белыми карточками читалось как грязь — теперь полотно само почти белое,
+    с едва тёплым оттенком, а карточки отделяются светом, а не перепадом серого. */
+ --page:#f6f6f7;        /* полотно: нейтральное, почти белое */
+ --bg:#fbfbfc;
+ --surface:#ffffff;
+ --card:#ffffff;
+ --sunken:#fafafb;
+ --sidebar:#f2f2f4;     /* панель на ступень глубже полотна */
+ --dock:#ffffff;
+ --raised:rgba(15,17,22,.045);
+ --hover:rgba(15,17,22,.05);
+ --control:#ffffff;
+ --control-line:#e3e3e7;
+ --line:#eaeaee;        /* грани — волосяные, не серые полосы */
+ --line-strong:#dcdce1;
+ --track:#eaeaee;
+ --handle:#c9c9d0;
+ --handle-on:#a1a1aa;
+ --dot:#e0e0e5;
+ --scrim:rgba(18,20,26,.28);
+ --shadow-soft:rgba(18,20,26,.055);
+ --shadow-deep:rgba(18,20,26,.14);
+
+ --text:#15161a;
+ --muted:#686a72;
+
+ --lime:#caff73;
+ --ink-accent:#4c7d12;  /* на белом лайм нечитаем — чернила темнее */
+ --on-lime:#1b2a05;
+ --on-fill:#ffffff;
+ --accent-soft:#f1f8e2;
+ --accent-edge:#dcecbe;
+ --accent-ink:#3f6a0f;
+ --green:#2f9e44;
+ --red:#8b1a26;
+
+ --bubble-in:#ffffff;
+ --bubble-out:#e6f6c4;
+ --bubble-out-ink:#17250a;
+ --bubble-out-time:#5f7f2c;
+
+ --term-bg:#191a1e;
+ --term-ink:#cfe6a0;
+
+ --av-bg:#f0f6e4;
+ --av-gold-bg:#faf1dc;  --av-gold-ink:#8a6200;
+ --av-risk-bg:#ecf0fd;  --av-risk-ink:#3457b8;
+ --av-info-bg:#e7f3f4;  --av-info-ink:#0d707c;
+ --rec-bg:#fdeced;      --rec-line:#8b1a26;  --rec-ink:#8b1a26;
+
+ --grid:#eeeef1;
+ --axis:#d2d2d9;
+ --axis-ink:#82848c;
+ --up:#2f9e44;
+ --down:#8b1a26;
+ --draw:#4c7d12;
+ --draw-chip:#f1f8e2;
+
+ /* стекло на светлом — не молоко, а лёгкая дымка: прозрачнее и с чистым бликом */
+ --glass:rgba(255,255,255,.72);
+ --glass-soft:rgba(255,255,255,.55);
+ --edge:rgba(18,20,26,.06);
+ --sheen:inset 0 1px 0 rgba(255,255,255,.9);
+ --lift:0 1px 2px rgba(18,20,26,.04),0 10px 28px rgba(18,20,26,.06);
+ --in:rgba(255,255,255,.92);
+ --wall-1:rgba(150,185,90,.07);
+ --wall-2:rgba(120,160,215,.05);
+ --wall-3:rgba(90,175,150,.05);
+ --chat-wall-1:rgba(150,185,90,.035);
+ --chat-wall-2:rgba(120,160,215,.03);
+}
+
+
+*{box-sizing:border-box}html,body{margin:0;height:100%;background:var(--page);color:var(--text);font:16px/1.5 var(--font)}button,input,textarea,select{font:inherit}button{cursor:pointer;color:inherit;border:0;background:none}button:disabled{opacity:.45;cursor:default}button:focus-visible,a:focus-visible{outline:2px solid var(--lime);outline-offset:3px}input,textarea,select{color:inherit;outline:none;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px;width:100%}input:focus,textarea:focus{border-color:var(--ink-accent)}textarea{resize:vertical}button,input,select{min-height:44px}svg{display:block}.ico{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}.iconbtn{width:44px;height:44px;display:grid;place-items:center;border-radius:12px;flex-shrink:0}.iconbtn:hover{background:var(--raised)}.muted,small{color:var(--muted)}small{font-size:13px}.brand{display:flex;gap:10px;align-items:center;font-size:23px;font-weight:650;letter-spacing:-1px}.brand svg{color:var(--ink-accent)}h1,h2,h3,p{margin:0}h1{font-size:30px;line-height:1.2;letter-spacing:-1px;font-weight:550}h2{font-size:22px;line-height:1.3;letter-spacing:-.5px;font-weight:550}h3{font-size:16px;font-weight:600}.row{display:flex;gap:12px;align-items:center}.between{justify-content:space-between}.grow{flex:1;min-width:0}.tag{font-size:13px;color:var(--muted);border:1px solid var(--line);padding:3px 8px;border-radius:6px;white-space:nowrap}.tagbtn{font-size:14px;color:var(--muted);border:1px solid var(--line);padding:6px 12px;border-radius:9px;min-height:34px;white-space:nowrap}.tagbtn:hover{background:var(--raised);color:var(--text)}.primary{background:var(--lime);color:var(--on-lime);font-weight:650;border-radius:12px;padding:12px 18px}.secondary{border:1px solid var(--line);border-radius:12px;padding:11px 16px;background:var(--surface)}.fullwidth{width:100%}.label{display:block;font-size:15px;margin-bottom:7px}.sectionlabel{font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin:24px 0 12px}.working{color:var(--ink-accent)}.up{color:var(--green)}.down{color:var(--red)}
+.appframe{height:100dvh;max-width:1400px;margin:auto;display:flex;background:var(--bg)}
+.sidebar{width:330px;border-right:1px solid var(--line);flex-shrink:0;display:flex;flex-direction:column;background:var(--sidebar);position:relative}.sidehead{padding:18px 16px 12px;display:grid;gap:12px}.searchbox{display:flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:0 12px;color:var(--muted)}.searchbox input{border:0;background:none;padding:10px 0;min-height:40px}.sidebody{padding:0 8px calc(14px + env(safe-area-inset-bottom));overflow:auto;flex:1}.addbtn{color:var(--ink-accent);border:1px solid var(--line)}.addbtn .ico{stroke-width:2.1}.addbtn:hover{background:var(--accent-soft)}.sidefoot{border-top:1px solid var(--line);padding:12px}
+.chatrow{position:relative;width:100%;text-align:left;border-radius:14px;padding:10px;display:flex;gap:12px;align-items:center;margin:2px 0}.chatrow:hover{background:var(--raised)}.chatrow.active{background:var(--accent-soft)}.chatrow b{display:block;font-size:16px;font-weight:550;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.chatrow p{font-size:14px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:2px}.chatrow time{font-size:12px;color:var(--muted);flex-shrink:0}.chatrow .ico{width:15px;height:15px;color:var(--muted);flex-shrink:0}.chatrow.pinned{margin-bottom:8px}.livedot{position:absolute;left:40px;top:40px;width:11px;height:11px;border-radius:50%;background:var(--lime);border:2px solid var(--sidebar)}
+.avatar{height:44px;width:44px;display:grid;place-items:center;border-radius:14px;background:var(--av-bg);color:var(--ink-accent);flex-shrink:0}.avatar.gold{background:var(--av-gold-bg);color:var(--av-gold-ink)}.avatar.risk{background:var(--av-risk-bg);color:var(--av-risk-ink)}.avatar.info{background:var(--av-info-bg);color:var(--av-info-ink)}.avatar.mach{background:var(--raised);color:var(--muted)}.avatar.big{height:60px;width:60px;border-radius:19px}
+.main{flex:1;min-width:0;position:relative;display:flex;flex-direction:column;overflow:hidden}.topbar{min-height:72px;padding:12px 20px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--line);background:var(--card)}.topbar h2{font-size:16px;letter-spacing:0}.topbar p{font-size:13px;color:var(--muted)}.topbar .avatar{height:40px;width:40px;border-radius:13px}.mobileback{display:none}
+.empty{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:32px 24px 80px;max-width:520px;align-self:center}.empty .emblem{width:74px;height:74px;background:var(--surface);border:1px solid var(--line);display:grid;place-items:center;border-radius:23px;margin-bottom:25px}.emblem .ico{width:38px;height:38px;color:var(--ink-accent)}.empty p{color:var(--muted);margin:15px 0 25px;line-height:1.6}.empty .primary{width:100%;max-width:310px}
+.overview{padding:22px 24px 155px;overflow:auto;flex:1}.intro{margin-bottom:18px}.intro p{color:var(--muted);font-size:15px;margin-top:6px}
+.chartcard{border:1px solid var(--line);border-radius:18px;background:var(--card);overflow:hidden}.charthead{display:flex;padding:12px 14px;align-items:center;gap:10px}.ctl{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:34px;padding:0 12px;border:1px solid var(--line);border-radius:10px;color:var(--muted);font-size:15px;line-height:1;flex-shrink:0;white-space:nowrap}.ctl:hover{background:var(--raised);color:var(--text)}.ctl .lbl{white-space:nowrap}.ctl .ico{width:16px;height:16px;display:inline-block;vertical-align:middle;flex:0 0 auto}.ctl.instrument .ico{transform:rotate(180deg)}.ctl.sq{border-color:transparent;width:34px;padding:0}.ctl.sq:hover{border-color:transparent;background:var(--raised)}.chartwrap{height:270px;width:100%;position:relative}.chartwrap svg{height:100%;width:100%}.charts{display:grid;gap:12px}.charts.two .chartwrap{height:186px}.charts.many{grid-template-columns:1fr 1fr}.charts.many .chartwrap{height:132px}.charts.many .charthead{padding:8px 10px;gap:4px}.charts.many .ctl{height:30px;padding:0 8px;font-size:14px}.charts.many .ctl .ico{width:14px;height:14px}.charts.many .ctl.sq{width:30px}.charts.two .chartcard.second{background:var(--sunken)}.charts.two .charthead{padding:10px 13px}.chartcard.second{background:var(--sunken)}
+.taskcard{border-top:1px solid var(--line);padding:16px 0}.taskcard p{font-size:15px;color:var(--muted);margin-top:5px}.pill{display:inline-flex;align-items:center;gap:5px;border-radius:7px;font-size:13px;background:var(--accent-soft);color:var(--accent-ink);padding:4px 8px}.pill .ico{width:14px;height:14px}
+.summarygrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.summarygrid.tight{margin-top:12px}.stat{padding:14px;border:1px solid var(--line);border-radius:14px}.stat b{font-size:20px;font-weight:550;display:block}.stat small{display:block;margin-top:2px}
+.accstrip{border:1px solid var(--line);border-radius:16px;padding:14px;margin-top:18px;background:var(--surface)}.accstrip b{font-size:16px;display:block}.thinrow{display:flex;align-items:center;gap:10px;text-align:left;margin-top:16px;padding:11px 12px;border:1px solid var(--line);border-radius:12px;color:var(--muted);font-size:15px;min-height:46px}.thinrow:hover{background:var(--raised);color:var(--text)}.thinrow .ico{width:18px;height:18px;flex-shrink:0}.thinrow .ico:last-child{transform:rotate(90deg)}
+.riskitem{padding:16px;border:1px solid var(--line);border-radius:14px;margin-bottom:10px}.riskitem p{font-size:15px;color:var(--muted);margin-top:8px}
+.workrow{display:flex;gap:12px;align-items:flex-start;padding:14px;border:1px solid var(--line);border-radius:14px;margin-bottom:10px}.workrow:hover{background:var(--raised)}.workrow b{font-size:16px}.workrow p{font-size:14px;color:var(--ink-accent);margin:4px 0 9px}
+.bar{height:4px;border-radius:4px;background:var(--track);overflow:hidden}.bar i{display:block;height:100%;background:var(--lime);transition:width .5s linear}
+.dock{position:absolute;bottom:0;left:0;right:0;height:var(--dock,145px);max-height:calc(100% - 70px);background:var(--dock);border-top:1px solid var(--line-strong);border-radius:22px 22px 0 0;display:flex;flex-direction:column;box-shadow:0 -10px 35px var(--shadow-soft);transition:height .42s cubic-bezier(.32,.72,0,1);z-index:9}.dock.dragging{transition:none}.dockhandle{width:100%;min-height:38px;height:38px;touch-action:none;display:grid;place-items:center;flex-shrink:0}.dockhandle span{width:38px;height:4px;background:var(--handle);border-radius:10px}
+.dockcollapsed{display:none;align-items:center;gap:10px;padding:0 14px 10px}.dockhint{font-size:14px;color:var(--muted);flex:1;text-align:center}.voicehold{display:flex;align-items:center;justify-content:center;gap:7px;min-height:38px;padding:0 12px;border:1px solid var(--line-strong);border-radius:11px;color:var(--muted);font-size:13px;background:var(--control);touch-action:none;user-select:none}.voicehold .ico{width:17px;height:17px}.voicehold.recording{background:var(--rec-bg);border-color:var(--rec-line);color:var(--rec-ink)}.voicehold.recording .ico{animation:voicepulse .8s ease-in-out infinite}@keyframes voicepulse{50%{transform:scale(1.2);opacity:.6}}.dock.collapsed .dockcollapsed{display:flex}.dock.collapsed .composer{display:none}.dock.collapsed .dockhandle{min-height:34px;height:34px}.dock.collapsed .dockhandle span{width:48px;background:var(--handle-on)}
+.dock.collapsed{height:64px!important}.dock.collapsed .dockcollapsed{padding:0 12px 7px;justify-content:flex-end}.dock.collapsed .dockhint{display:none}.dock.collapsed .voicehold{width:40px;height:36px;min-height:36px;padding:0;border-radius:10px}.dock.collapsed .voicehold span{display:none}.dock.collapsed .voicehold .ico{width:18px;height:18px}.dock.collapsed .dockhandle{height:27px;min-height:27px}
+.dock.collapsed .dockcollapsed{gap:8px;padding:0 12px 8px}.glassprompt{flex:1;min-width:0;height:38px;min-height:38px;padding:0 14px;text-align:left;border:1px solid var(--edge);border-radius:14px;background:var(--glass-soft);backdrop-filter:blur(18px) saturate(135%);-webkit-backdrop-filter:blur(18px) saturate(135%);color:var(--muted);font-size:14px;box-shadow:var(--sheen),0 8px 24px var(--shadow-soft);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.glassprompt:hover{background:rgba(255,255,255,.12);color:var(--text)}.dock.collapsed .voicehold{background:var(--accent-soft);border-color:var(--accent-edge);color:var(--ink-accent);backdrop-filter:blur(18px) saturate(135%);-webkit-backdrop-filter:blur(18px) saturate(135%)}
+.dock.collapsed{height:auto!important;bottom:max(14px,env(safe-area-inset-bottom));padding:0 12px;background:transparent;border:0;border-radius:0;box-shadow:none;max-height:none;overflow:visible;transition:none;backdrop-filter:none;-webkit-backdrop-filter:none}
+.dock.collapsed .dockhandle{display:none}
+.dock.collapsed .dockcollapsed{padding:0;justify-content:stretch;gap:8px}
+.dock.collapsed .glassprompt{
+ height:48px;min-height:48px;border-radius:999px;padding:0 20px;font-size:16px;
+ background:var(--glass);border:1px solid var(--edge);
+ backdrop-filter:blur(30px) saturate(180%);-webkit-backdrop-filter:blur(30px) saturate(180%);
+ box-shadow:var(--sheen),inset 0 -1px 2px var(--shadow-soft),0 10px 32px var(--shadow-soft)}
+.dock.collapsed .voicehold{
+ width:48px;height:48px;min-height:48px;border-radius:999px;padding:0;
+ background:var(--glass);border:1px solid var(--edge);color:var(--ink-accent);
+ backdrop-filter:blur(30px) saturate(180%);-webkit-backdrop-filter:blur(30px) saturate(180%);
+ box-shadow:var(--sheen),inset 0 -1px 2px var(--shadow-soft),0 10px 28px var(--shadow-soft)}
+.dock.collapsed .voicehold.recording{background:var(--rec-bg);border-color:var(--rec-line);color:var(--rec-ink)}
+.overview{padding-bottom:24px}.chartwrap{height:320px}
+.fullscreen .overview{padding-bottom:0}
+.docktitle{display:flex;align-items:center;padding:0 18px 5px;font-size:15px;gap:10px}.docktitle .iconbtn{height:28px;min-height:28px;width:30px}
+.messages{overflow:auto;flex:1;min-height:0;padding:12px 18px 14px}.msg{margin:6px 0;display:flex}.msg.user{justify-content:flex-end}.bubble{max-width:min(560px,86%);background:var(--bubble-in);border-radius:16px 16px 16px 5px;padding:9px 13px 7px;font-size:16px;line-height:1.5}.msg.user .bubble{background:var(--bubble-out);border-radius:16px 16px 5px 16px}.bubble .body{white-space:pre-wrap}.bubble time{display:block;text-align:right;font-size:12px;color:var(--muted);margin-top:3px}.msg.user .bubble time{color:var(--bubble-out-time)}
+.msgcard{border:1px solid var(--accent-edge);background:var(--accent-soft);border-radius:12px;padding:11px 12px;margin-top:9px;font-size:15px}.msgcard>.row{margin-bottom:8px}.cardrows{display:grid;gap:6px}.cardrow{display:flex;justify-content:space-between;gap:14px;color:var(--muted)}.cardrow b{color:var(--text);font-weight:550;text-align:right}.cardlines{margin:0;padding-left:18px;color:var(--muted);display:grid;gap:5px}.cardnote{display:block;margin-top:9px;line-height:1.5}
+.result{border:1px solid var(--line);background:var(--raised);padding:10px 12px;border-radius:12px;margin-top:9px;font-size:14px;color:var(--muted)}
+.runcard{min-width:210px}.runcard p{font-size:14px;color:var(--muted);margin:6px 0 9px}.spin{width:15px;height:15px;border-radius:50%;border:2px solid var(--accent-edge);border-top-color:var(--ink-accent);animation:sp .8s linear infinite;flex-shrink:0}@keyframes sp{to{transform:rotate(360deg)}}
+.quickactions{display:flex;gap:7px;overflow:auto;padding:5px 16px 10px;flex-shrink:0}.quickactions button{border:1px solid var(--line-strong);border-radius:18px;padding:6px 12px;white-space:nowrap;font-size:14px;min-height:34px}.composer{padding:0 12px calc(12px + env(safe-area-inset-bottom));flex-shrink:0}.inputbox{display:flex;align-items:flex-end;gap:5px;background:var(--control);border:1px solid var(--control-line);border-radius:18px;padding:6px}.inputbox textarea{border:0;background:none;resize:none;padding:9px 8px;min-height:42px;height:44px;max-height:110px;flex:1;min-width:0;font-size:16px;line-height:24px}.inputbox .send{background:var(--lime);color:var(--on-lime);border-radius:999px;width:38px;height:38px;min-height:38px;margin:2px}.inputbox .iconbtn{width:34px;min-height:38px;height:38px;color:var(--muted)}
+.dock.collapsed .docktitle,.dock.collapsed .messages,.dock.collapsed .quickactions{display:none}
+.fullscreen .overview{padding:0 0 120px;display:flex;flex-direction:column}.fullscreen .charts{flex:1;display:flex;gap:0}.fullscreen .chartcard{border:0;border-radius:0;flex:1;display:flex;flex-direction:column}.fullscreen .charts.two .chartwrap{height:auto}.fullscreen .chartwrap{flex:1;min-height:250px}.fullscreen .intro,.fullscreen .belowchart,.fullscreen .chartcard.second,.fullscreen .thinrow{display:none}
+dialog{border:1px solid var(--line);border-radius:22px;padding:0;background:var(--surface);color:var(--text);width:min(500px,calc(100% - 24px));max-height:90dvh;box-shadow:0 30px 120px var(--scrim)}dialog::backdrop{background:var(--scrim);backdrop-filter:blur(5px)}.dialoghead{display:flex;align-items:center;padding:18px 22px 8px;gap:10px}.dialogbody{padding:12px 22px 24px;overflow:auto}.formgap{margin-top:18px}.notice{display:flex;gap:10px;font-size:14px;color:var(--muted);padding:12px;border:1px solid var(--line);border-radius:12px;line-height:1.6}.notice .ico{flex-shrink:0}.picklist{display:grid;gap:4px}.pickrow{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;text-align:left;padding:12px 14px;border-radius:12px;font-size:16px;min-height:50px}.pickrow:hover{background:var(--raised)}.pickrow.on{background:var(--accent-soft);color:var(--ink-accent);font-weight:550}.pickrow .ico{width:18px;height:18px}.chips{display:flex;flex-wrap:wrap;gap:7px}.chip{border:1px solid var(--line);border-radius:18px;padding:7px 12px;font-size:14px;color:var(--muted);min-height:34px;text-align:left}.chip:hover{border-color:var(--ink-accent);color:var(--text)}
+.settingsrow{padding:12px 0;display:flex;justify-content:space-between;gap:16px;border-bottom:1px solid var(--line);font-size:15px;min-height:0;align-items:center}.settingsrow span{color:var(--muted)}.linkrow{width:100%;text-align:left}.linkrow .val{display:flex;align-items:center;gap:4px;color:var(--text)}.linkrow .ico{width:16px;height:16px;transform:rotate(90deg);color:var(--muted)}
+.computer{padding:22px 24px 40px;overflow:auto}.approw{display:flex;gap:12px;align-items:center;padding:13px 0;border-bottom:1px solid var(--line)}.approw b{font-size:16px}.approw p{font-size:13px;color:var(--muted)}.logrow{padding:12px 0;font-size:15px;border-bottom:1px solid var(--line)}.logrow small{display:block}.terminal{font:13px/1.7 ui-monospace,monospace;background:var(--term-bg);border:1px solid var(--line);padding:16px;border-radius:12px;white-space:pre-wrap;word-break:break-word;color:var(--term-ink)}.emptylist{padding:28px 12px;color:var(--muted);font-size:15px}
+@media(min-width:1000px){.overview{padding-left:44px;padding-right:44px}.charts.two{grid-template-columns:1fr 1fr}.charts.two .chartwrap{height:250px}.charts.many .chartwrap{height:180px}.dock{left:26px;right:26px}.chartwrap{height:330px}.messages{padding-left:26px;padding-right:26px}.computer{padding-left:44px;padding-right:44px}}
+@media(max-width:700px){.sidebar{width:100%;border:0}.main{display:none}.appframe.detail .sidebar{display:none}.appframe.detail .main{display:flex}.topbar{padding:10px 12px;min-height:66px}.mobileback{display:grid}.sidehead{padding:20px 14px 12px}.sidebody{padding:0 10px calc(14px + env(safe-area-inset-bottom))}.overview{padding:18px 16px 24px}.chartwrap{height:300px}.charts.two .chartwrap{height:210px}.computer{padding:18px 16px 30px}.dock{border-radius:20px 20px 0 0}.bubble{max-width:88%}.dialogbody{padding:12px 18px 22px}.dialoghead{padding:14px 18px 6px}.primary{font-size:16px}.charthead{padding:10px 13px}.fullscreen .chartwrap{height:auto}.livedot{left:38px;top:36px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+.fullscreen .overview{padding-bottom:0!important}
+.fullscreen .chartwrap{flex:1 1 auto!important;height:auto!important;min-height:200px}.fullscreen .chartwrap svg{max-height:100%}
+.hero{padding:18px;border:1px solid var(--line);border-radius:16px;background:var(--card)}
+.hero b{display:block;font-size:38px;line-height:1.1;letter-spacing:-1.5px;font-weight:550;margin:6px 0}
+.chartcard.algo{margin-top:12px}
+.chartcard.algo .charthead .lbl{font-size:15px;font-weight:600}
+.algoplot{width:100%;padding:0 4px 4px}
+.algoplot svg{width:100%;height:100%;overflow:visible}
+.algoplot.tall{height:230px}
+.algoplot.mid{height:170px}
+.algoplot.short{height:120px}
+.chip.on{color:var(--text);border-color:var(--ink-accent)}
+@media(min-width:701px){.overview .summarygrid{grid-template-columns:repeat(4,1fr)}}
+.runpanel{border:1px solid var(--accent-edge);background:var(--accent-soft);border-radius:16px;padding:16px;margin-bottom:18px}
+.runpanel small{display:block}
+.steplist{list-style:none;margin:0;padding:0;display:grid;gap:9px}
+.steplist li{display:flex;gap:10px;align-items:center;font-size:15px;color:var(--muted)}
+.steplist li.now{color:var(--ink-accent)}
+.steplist li.ok{color:var(--text)}
+.steplist li.ok .ico{color:var(--green);width:17px;height:17px}
+.dotmark{width:15px;height:15px;border-radius:50%;border:2px solid var(--dot);flex-shrink:0}
+
+/* ===== liquid glass + телеграммовский чат ===== */
+/* подложка: мягкие световые пятна, поверх которых плавают стеклянные поверхности */
+body{background:
+ radial-gradient(900px 620px at 12% -8%,var(--wall-1),transparent 60%),
+ radial-gradient(760px 560px at 88% 4%,var(--wall-2),transparent 62%),
+ radial-gradient(820px 680px at 62% 108%,var(--wall-3),transparent 60%),
+ var(--page);background-attachment:fixed}
+.appframe{background:transparent}
+/* стеклянные поверхности */
+.topbar,.dock{background:var(--glass);backdrop-filter:blur(30px) saturate(170%);-webkit-backdrop-filter:blur(30px) saturate(170%)}
+.sidebar{
+ background:
+  radial-gradient(720px 520px at 12% -6%,var(--wall-1),transparent 62%),
+  radial-gradient(620px 480px at 92% 8%,var(--wall-2),transparent 64%),
+  radial-gradient(680px 600px at 50% 104%,var(--wall-3),transparent 62%),
+  var(--sidebar);
+ backdrop-filter:none;-webkit-backdrop-filter:none;
+}
+.sidebar{border-right:1px solid var(--edge);box-shadow:var(--sheen)}
+.topbar{border-bottom:1px solid var(--edge);box-shadow:var(--sheen);position:relative;z-index:2}
+.dock{background:var(--glass);border-top:1px solid var(--edge);box-shadow:var(--sheen),0 -20px 50px rgba(0,0,0,.45)}
+.chartcard,.stat,.hero,.runpanel,.taskcard,.notice,.accstrip,.msgcard,.approw,.workrow,.riskitem,.settingsrow,.terminal,dialog{
+ background:var(--glass-soft);backdrop-filter:blur(22px) saturate(150%);-webkit-backdrop-filter:blur(22px) saturate(150%);
+ border-color:var(--edge)}
+.chartcard,.hero,.runpanel,.notice,.accstrip,.msgcard{box-shadow:var(--sheen),var(--lift)}
+.stat{box-shadow:var(--sheen)}
+.taskcard{border:1px solid var(--edge);border-radius:14px;padding:14px;margin-bottom:8px}
+.chip,.quickactions button,.tagbtn,.tag,.ctl,.thinrow,.pickrow{border-color:var(--edge);background:rgba(255,255,255,.05);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.chip:hover,.quickactions button:hover,.tagbtn:hover,.ctl:hover{background:rgba(255,255,255,.1)}
+.chatrow.active{background:var(--accent-soft);box-shadow:var(--sheen)}
+.chatrow:hover{background:rgba(255,255,255,.07)}
+.primary{box-shadow:0 10px 30px var(--shadow-soft)}
+dialog{box-shadow:var(--sheen),0 30px 80px rgba(0,0,0,.6)}
+.iconbtn:hover{background:var(--hover)}
+/* чат в духе телеграма: обои, хвостики у пузырей, плашка дня, галочки */
+/* лента прозрачна: фон один — у всего шита */
+.messages{background:none}
+.daypill{display:flex;justify-content:center;position:sticky;top:0;z-index:2;padding:4px 0 10px;pointer-events:none}
+.daypill span{font-size:13px;color:var(--text);padding:4px 12px;border-radius:14px;background:var(--glass);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--edge)}
+.msg{margin:0}
+/* смена собеседника — заметный зазор, внутри серии — плотно */
+.msg+.msg{margin-top:3px}
+.msg:not(.grouped)+.msg{margin-top:12px}
+.msg.grouped{margin-bottom:0}
+.bubble{position:relative;background:var(--in);backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);border:1px solid var(--edge);border-radius:17px;box-shadow:0 6px 18px rgba(0,0,0,.26)}
+.msg.user .bubble{background:var(--bubble-out);color:var(--bubble-out-ink);border-color:var(--accent-edge)}
+.msg:not(.grouped) .bubble{border-bottom-left-radius:6px}
+.msg.user:not(.grouped) .bubble{border-bottom-left-radius:17px;border-bottom-right-radius:6px}
+.msg.grouped .bubble{border-radius:17px}
+.msg:not(.grouped) .bubble::after{content:"";position:absolute;bottom:-1px;left:-6px;width:14px;height:14px;background:inherit;border-left:1px solid var(--edge);border-bottom:1px solid var(--edge);border-radius:0 0 0 12px;clip-path:polygon(0 100%,100% 100%,100% 0)}
+.msg.user:not(.grouped) .bubble::after{left:auto;right:-6px;border-left:0;border-right:1px solid var(--accent-edge);border-radius:0 0 12px 0;clip-path:polygon(0 100%,100% 100%,0 0)}
+.bubble time{display:flex;align-items:center;justify-content:flex-end;gap:3px}
+.bubble time .ico{width:14px;height:14px;stroke-width:2.4}
+.msg.user .bubble time{color:var(--bubble-out-time)}
+.msg.user .bubble time .ico{color:var(--bubble-out-time)}
+.inputbox{background:rgba(255,255,255,.07);border-color:var(--edge);backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);box-shadow:var(--sheen)}
+@media(prefers-reduced-transparency:reduce){.sidebar,.topbar,.dock,.chartcard,.stat,.hero,.runpanel,.notice,.bubble,dialog{backdrop-filter:none;-webkit-backdrop-filter:none;background:var(--surface)}}
+
+/* логотип = переключатель темы: точка-индикатор наливается в цвет текущей темы */
+.brand{min-height:auto;padding:4px 8px 4px 4px;margin-left:-4px;border-radius:12px;transition:background .18s}
+.brand:hover{background:var(--raised)}
+.brand:active{transform:scale(.97)}
+/* ---------- шапка: плавающие капсулы вместо сплошной плиты ----------
+   Плита была непрозрачной полосой в потоке — стеклу нечего было преломлять.
+   Капсулы вынуты из потока и висят поверх контента: под ними едет график
+   и переписка, и это видно сквозь стекло. */
+.topbar{
+ position:absolute;top:calc(env(safe-area-inset-top,0px) + 10px);left:10px;right:10px;z-index:20;
+ display:flex;align-items:center;gap:8px;pointer-events:none;
+ min-height:0;padding:0;border:0;background:none;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;
+}
+.capsule{
+ display:flex;align-items:center;gap:8px;height:52px;padding:0 6px;border-radius:999px;pointer-events:auto;
+ background:var(--glass);-webkit-backdrop-filter:blur(30px) saturate(180%);backdrop-filter:blur(30px) saturate(180%);
+ border:1px solid var(--edge);
+ box-shadow:var(--sheen),inset 0 -1px 2px var(--shadow-soft),var(--lift);
+}
+.capsule.title{
+ flex:0 1 auto;max-width:min(420px,52%);margin:0 auto;padding:0 18px;
+ flex-direction:column;justify-content:center;align-items:center;gap:0;min-width:0;
+}
+.capsule.title h2{font-size:16px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.capsule.title p{font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;margin-top:-1px}
+.capsule.actions{padding:0 4px;gap:0}
+.capsule .avatar{height:40px;width:40px;border-radius:50%}
+.capsule .iconbtn{width:40px;height:40px;border-radius:50%}
+/* контент уезжает под капсулы — сверху освобождается место */
+.overview,.computer{padding-top:calc(env(safe-area-inset-top,0px) + 82px)}
+.fullscreen .overview{padding-top:calc(env(safe-area-inset-top,0px) + 74px)}
+@media(max-width:700px){
+ .capsule{height:48px}
+ .capsule .avatar,.capsule .iconbtn{width:38px;height:38px}
+ .capsule.title{max-width:none;flex:1}
+ .overview,.computer{padding-top:calc(env(safe-area-inset-top,0px) + 74px)}
+}
+@media(min-width:701px){.topbar{left:26px;right:26px}}
+@media(prefers-reduced-transparency:reduce){.capsule{backdrop-filter:none;-webkit-backdrop-filter:none;background:var(--surface)}}
+
+@keyframes micpulse{50%{box-shadow:var(--sheen),0 0 0 7px var(--rec-bg)}}
+
+
+/* ---------- поиск, спрятанный под значок ---------- */
+.headactions{display:flex;gap:8px;align-items:center}
+.roundbtn{
+ width:44px;height:44px;border-radius:999px;color:var(--text);
+ background:var(--glass);border:1px solid var(--edge);
+ backdrop-filter:blur(30px) saturate(180%);-webkit-backdrop-filter:blur(30px) saturate(180%);
+ box-shadow:var(--sheen),inset 0 -1px 2px var(--shadow-soft);
+ transition:background .18s,transform .15s;
+}
+.roundbtn:hover{box-shadow:var(--sheen),inset 0 -1px 2px var(--shadow-soft),inset 0 0 0 99px var(--hover)}
+.roundbtn:active{transform:scale(.92)}
+.chatrow .hit{color:var(--ink-accent)}
+
+/* обратный ход: логотип и значки возвращаются со своей стороны */
+
+/* ---------- поиск, раздвигающий соседей ----------
+   Все трое — логотип, поиск и «плюс» — лежат в одном ряду.
+   Поиск растёт по потоку (flex-grow), логотип и «плюс» схлопываются по max-width.
+   Никакого масштабирования: ширина настоящая, значки не искажаются. */
+.sidehead{display:flex;align-items:center;gap:8px;padding:18px 14px 12px;min-height:80px}
+.sidehead .brand{
+ flex:0 1 auto;min-width:0;max-width:220px;overflow:hidden;white-space:nowrap;
+ transition:max-width .42s cubic-bezier(.32,.72,0,1),opacity .2s,margin .42s cubic-bezier(.32,.72,0,1),padding .42s;
+}
+.sidehead .brand span{display:inline-block}
+.sidehead.searching .brand{max-width:0;opacity:0;margin-left:-8px;padding-left:0;padding-right:0;pointer-events:none}
+
+.sidehead .searchbox{
+ flex:0 1 44px;min-width:44px;overflow:hidden;gap:0;padding:0;
+ height:44px;border-radius:999px;
+ background:var(--glass);border:1px solid var(--edge);
+ backdrop-filter:blur(30px) saturate(180%);-webkit-backdrop-filter:blur(30px) saturate(180%);
+ box-shadow:var(--sheen),inset 0 -1px 2px var(--shadow-soft);
+ transition:flex-grow .42s cubic-bezier(.32,.72,0,1),background .2s;
+}
+.sidehead.searching .searchbox{flex-grow:1}
+.sidehead .searchbox:hover{background:color-mix(in srgb,var(--glass) 100%,transparent);box-shadow:var(--sheen),inset 0 -1px 2px var(--shadow-soft),inset 0 0 0 99px var(--hover)}
+.sidehead.searching .searchbox:hover{background:var(--glass)}
+.searchtoggle{width:42px;height:42px;flex-shrink:0;border-radius:50%;color:var(--text)}
+.sidehead .searchbox input{
+ flex:1;min-width:0;width:0;border:0;background:none;padding:0;min-height:42px;color:var(--text);
+ opacity:0;transition:opacity .2s;
+}
+.sidehead.searching .searchbox input{opacity:1;padding-right:4px;transition:opacity .26s .16s}
+.searchbox .clearbtn{
+ width:0;height:36px;min-height:36px;flex-shrink:0;border-radius:50%;color:var(--muted);
+ opacity:0;overflow:hidden;transition:width .3s,opacity .2s;
+}
+.sidehead.searching .searchbox .clearbtn{width:36px;margin-right:3px;opacity:1;transition:width .32s .1s,opacity .24s .18s}
+.searchbox .clearbtn:hover{background:var(--hover)}
+.searchbox .clearbtn .ico{width:17px;height:17px}
+
+.sidehead .addbtn{
+ flex-shrink:0;max-width:44px;min-width:44px;overflow:hidden;
+ transition:max-width .42s cubic-bezier(.32,.72,0,1),opacity .2s,margin .42s cubic-bezier(.32,.72,0,1);
+}
+.sidehead.searching .addbtn{max-width:0;min-width:0;padding:0;opacity:0;margin-left:-8px;border-width:0;pointer-events:none}
+@media(prefers-reduced-motion:reduce){
+ .sidehead .brand,.sidehead .searchbox,.sidehead .searchbox input,.searchbox .clearbtn,.sidehead .addbtn{transition:none}
+}
+/* распорка: в покое отжимает значки к правому краю, при поиске отдаёт место строке */
+.headgap{flex:1 1 auto;min-width:0;transition:flex-grow .42s cubic-bezier(.32,.72,0,1)}
+.sidehead.searching .headgap{flex-grow:0}
+
+/* ---------- свечной график на холсте ---------- */
+.chartwrap{position:relative;cursor:crosshair;touch-action:none;overscroll-behavior:contain}
+canvas.cv{display:block;width:100%;height:100%}
+canvas.cv:active{cursor:grabbing}
+.cvlegend{
+ position:absolute;top:8px;left:10px;display:none;align-items:baseline;gap:5px;pointer-events:none;
+ font-size:12px;padding:5px 10px;border-radius:999px;
+ background:var(--glass);border:1px solid var(--edge);
+ backdrop-filter:blur(18px) saturate(160%);-webkit-backdrop-filter:blur(18px) saturate(160%);
+ box-shadow:var(--sheen);white-space:nowrap;
+}
+.cvlegend.on{display:flex}
+.cvlegend i{font-style:normal;color:var(--muted)}
+.cvlegend em{font-style:normal;color:var(--muted);margin-right:4px}
+.cvlegend b{font-weight:600}
+.cvlegend b.up{color:var(--up)}
+.cvlegend b.down{color:var(--down)}
+
+/* полноэкранный график тянется на всю высоту, снизу — место под плавающее поле ввода */
+.main.fullscreen .overview{display:flex;flex-direction:column;min-height:0;padding-bottom:0!important}
+.main.fullscreen .charts{flex:1 1 auto;min-height:0}
+.main.fullscreen .chartcard{flex:1 1 auto;min-height:0;display:flex;flex-direction:column}
+.main.fullscreen .chartwrap{flex:1 1 auto;min-height:0}
+/* во весь экран график — не карточка, а само полотно: без фона, краёв и теней,
+   иначе её верхняя кромка читается как разделитель, а низ — как отдельный подвал */
+.main.fullscreen .chartcard{background:none;backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:none;border:0}
+/* кнопки-ответы в карточке уточнения */
+.cardactions{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.cardactions .chip{color:var(--text);border-color:var(--accent-edge);background:var(--accent-soft)}
+.cardactions .chip:active{transform:scale(.96)}
+/* горизонтальный скролл у капсул не показываем: полоса лишь отвлекает, список и так едет пальцем/колесом */
+.quickactions{scrollbar-width:none}
+.quickactions::-webkit-scrollbar{display:none}
+/* поле ввода — полная капсула, отправка — отдельный круг справа */
+/* той же высоты, что пара на главной и в свёрнутом доке: капсула 48 + круг 48 */
+.composer{display:flex;align-items:center;gap:8px}
+.composer .inputbox{flex:1;min-width:0;height:48px;min-height:48px;border-radius:999px;padding:3px 4px 3px 20px;align-items:center}
+.composer .inputbox textarea{min-height:40px;height:40px;padding:8px 0}
+.composer .inputbox .sendbtn{width:40px;height:40px;min-height:40px;margin:0 0 0 2px;color:var(--on-lime)}
+.sendbtn{
+ width:40px;height:40px;min-height:40px;flex-shrink:0;border-radius:999px;
+ background:var(--lime);color:var(--on-lime);
+ box-shadow:var(--sheen),inset 0 -1px 2px var(--shadow-soft),0 6px 18px var(--shadow-soft);
+ transition:transform .15s;
+}
+.sendbtn:active{transform:scale(.92)}
+.sendbtn .ico{stroke-width:2.2}
+.circbtn{
+ width:48px;height:48px;min-height:48px;flex-shrink:0;border-radius:999px;color:var(--ink-accent);
+ background:var(--glass);border:1px solid var(--edge);
+ backdrop-filter:blur(30px) saturate(180%);-webkit-backdrop-filter:blur(30px) saturate(180%);
+ box-shadow:var(--sheen),inset 0 -1px 2px var(--shadow-soft);
+ transition:transform .15s;
+}
+.circbtn:active{transform:scale(.92)}
+
+.sheetcomposer .inputbox{flex:1;min-width:0;height:48px;min-height:48px;border-radius:999px;padding:3px 4px 3px 20px;align-items:center;display:flex}
+.sheetcomposer .inputbox input{flex:1;min-width:0;min-height:0;height:42px;border:0;background:none;padding:9px 0;font-size:16px;color:var(--text)}
+.sheetcomposer .inputbox input:focus{outline:none}
+.sheetcomposer .sendbtn{width:40px;height:40px;min-height:40px;margin:0 0 0 2px}
+.sheetcomposer .circbtn.recording{background:var(--rec-bg);border-color:var(--rec-line);color:var(--rec-ink);animation:micpulse 1.2s ease-in-out infinite}
+/* ---------- боттом-шит стратегии (собственный оверлей) ---------- */
+#sheetov{position:fixed;inset:0;z-index:40}
+.sheetbackdrop{position:absolute;inset:0;background:var(--scrim);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;transition:opacity .3s}
+#sheetov.open .sheetbackdrop{opacity:1}
+.sheetpanel{
+ position:absolute;left:0;right:0;bottom:0;margin:0 auto;max-width:760px;max-height:88dvh;
+ display:flex;flex-direction:column;
+ background:var(--surface);border:1px solid var(--edge);border-bottom:0;border-radius:26px 26px 0 0;
+ box-shadow:var(--sheen),0 -18px 60px var(--shadow-deep);
+ transform:translateY(110%);transition:transform .38s cubic-bezier(.32,.72,0,1);
+ padding-bottom:env(safe-area-inset-bottom,0px);
+}
+#sheetov.open .sheetpanel{transform:none}
+.sheetgrip{width:44px;height:5px;border-radius:99px;background:var(--handle);margin:8px auto 0;flex-shrink:0;touch-action:none;cursor:grab}
+.sheetpanel .dialoghead{cursor:grab;touch-action:none}
+.sheetpanel .dialogbody{overflow-y:auto;overscroll-behavior:contain;min-height:0}
+.sheetcomposer{
+ display:flex;align-items:center;gap:8px;flex-shrink:0;
+ padding:10px 12px calc(8px + env(safe-area-inset-bottom,0px));
+}
+.sheetcomposer .inputbox{flex:1;min-width:0;height:48px;min-height:48px;border-radius:999px;padding:3px 4px 3px 20px;align-items:center;display:flex}
+.sheetcomposer .inputbox input{flex:1;min-width:0;min-height:0;height:42px;border:0;background:none;padding:9px 0;font-size:16px;color:var(--text)}
+.sheetcomposer .inputbox input:focus{outline:none}
+.sheetcomposer .sendbtn{width:40px;height:40px;min-height:40px;margin:0 0 0 2px}
+.sheetcomposer .circbtn.recording{background:var(--rec-bg);border-color:var(--rec-line);color:var(--rec-ink);animation:micpulse 1.2s ease-in-out infinite}
+@media(prefers-reduced-motion:reduce){.sheetpanel,.sheetbackdrop{transition:none}}
+/* на широком экране кнопка «назад» не нужна — прячем и саму капсулу, чтобы не висела пустым огрызком */
+@media(min-width:701px){.capsule.lead{display:none}}
+
+
+/* тихая строка истории бота: она есть, но не тянет на себя внимание */
+.ghostrow{display:flex;align-items:center;gap:11px;padding:12px 16px;border-radius:16px;background:none;border:1px dashed var(--line);color:var(--muted);font-size:15px;margin-bottom:10px;text-align:left}
+.ghostrow:hover{background:var(--hover);color:var(--text)}
+.ghostrow .ico{width:18px;height:18px}
+/* график на холсте — картинка-кнопка: тап раскрывает во весь экран */
+.chartwrap.still{cursor:pointer;padding:0;border:0;background:none;display:block;width:100%;text-align:left;transition:opacity .15s}
+.chartwrap.still:hover{opacity:.92}
+.chartwrap.still:active{opacity:.85}
+
+/* в полноэкранном графике «назад» — единственный выход, поэтому капсула видна и на широком экране */
+@media(min-width:701px){.main.fullscreen .capsule.lead{display:flex}}
+.main.fullscreen .mobileback{display:grid}
+/* имя бота — просто текст поверх холста, без капсулы: так шапка читается чище */
+.capsule.title{background:none;backdrop-filter:none;-webkit-backdrop-filter:none;border:0;box-shadow:none;padding:0 12px;pointer-events:none}
+.capsule.title h2{font-weight:650}
+
+/* ---------- облачная среда бота ---------- */
+.envhead{display:flex;align-items:center;gap:12px;padding:14px;border:1px solid var(--line);border-radius:16px;background:var(--card)}
+.envhead small{display:block;color:var(--muted);font-size:13px}
+.livedot2{width:9px;height:9px;border-radius:50%;background:var(--green);flex-shrink:0;box-shadow:0 0 0 4px var(--accent-soft)}
+.browser{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--sunken)}
+.browserbar{display:flex;align-items:center;gap:10px;padding:8px 10px;background:var(--raised);border-bottom:1px solid var(--line)}
+.dots{display:flex;gap:5px;flex-shrink:0}
+.dots i{width:9px;height:9px;border-radius:50%;background:var(--handle)}
+.addr{flex:1;min-width:0;font-size:13px;color:var(--muted);background:var(--bg);border-radius:99px;padding:4px 12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.browserview{min-height:110px;display:grid;place-items:center;gap:6px;padding:18px;text-align:center}
+.browserview p{font-size:15px;font-weight:550;margin:0}
+.browserview small{color:var(--muted);font-size:13px}
+
+/* без подписи имя бота встаёт по центру капсулы */
+.capsule.title.solo{justify-content:center}
+
+/* ---------- индикаторы и copilot трендовой линии ---------- */
+.indbar{display:flex;gap:7px;flex-wrap:wrap;padding:10px 12px 0}
+.indchip{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--text);background:var(--accent-soft);border:1px solid var(--accent-edge);border-radius:999px;padding:4px 6px 4px 12px}
+.indchip button{width:20px;height:20px;min-height:20px;display:grid;place-items:center;border-radius:50%;color:var(--muted)}
+.indchip button:hover{background:var(--hover)}
+.indchip .ico{width:13px;height:13px;stroke-width:2.4}
+
+.ctl.on{background:var(--accent-soft);border-color:var(--accent-edge);color:var(--text)}
+
+
+/* ---------- панель инструментов разметки ---------- */
+.toolbar{display:flex;gap:7px;overflow-x:auto;padding:10px 12px 0;scrollbar-width:none}
+.toolbar::-webkit-scrollbar{display:none}
+.toolbtn{display:flex;align-items:center;gap:7px;white-space:nowrap;flex-shrink:0;height:36px;padding:0 13px;border-radius:999px;font-size:14px;color:var(--muted);background:var(--glass-soft);border:1px solid var(--edge);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);transition:background .16s,color .16s,transform .14s}
+.toolbtn .ico{width:16px;height:16px}
+.toolbtn:hover{background:var(--hover);color:var(--text)}
+.toolbtn:active{transform:scale(.95)}
+.toolbtn.on{background:var(--accent-soft);border-color:var(--accent-edge);color:var(--text)}
+.toolbtn.cancel{color:var(--muted)}
+
+
+/* ---------- контролы в стиле cTrader ---------- */
+.ctbar{position:absolute;left:14px;bottom:14px;z-index:5;display:flex;gap:10px;align-items:center}
+.ctpill{
+ display:inline-flex;align-items:center;gap:6px;height:40px;min-height:40px;padding:0 16px;border-radius:999px;
+ background:none;border:1px solid var(--line);color:var(--muted);font-size:15px;font-weight:400;
+ transition:background .16s,transform .14s;
+}
+.ctpill:hover{background:var(--hover)}
+.ctpill:active{transform:scale(.96)}
+.ctpill .ico{width:15px;height:15px;color:var(--muted)}
+/* «Птичка» раскрытия стоит последней и смотрит вниз; значок в начале капсулы не крутим. */
+.ctpill .ico:last-child{transform:rotate(90deg)}
+.ctpill .ico:first-child{width:16px;height:16px}
+/* вертикальная панель разметки над капсулами */
+.toolsrail{
+ position:absolute;left:14px;bottom:66px;z-index:6;display:flex;flex-direction:column;gap:2px;padding:6px;
+ border-radius:26px;border:1px solid var(--line-strong);background:var(--glass);
+ backdrop-filter:blur(26px) saturate(170%);-webkit-backdrop-filter:blur(26px) saturate(170%);
+ box-shadow:var(--sheen),0 10px 30px var(--shadow-soft);
+ animation:railin .28s cubic-bezier(.32,.72,0,1);
+}
+@keyframes railin{from{opacity:0;transform:translateY(10px) scale(.96)}to{opacity:1;transform:none}}
+.railbtn{width:44px;height:44px;min-height:44px;display:grid;place-items:center;border-radius:50%;color:var(--text);transition:background .16s}
+.railbtn:hover{background:var(--hover)}
+.railbtn.on{background:var(--accent-soft);color:var(--ink-accent)}
+.railbtn .ico{width:20px;height:20px}
+@media(prefers-reduced-motion:reduce){.toolsrail{animation:none}}
+
+/* ---------- плавающая кнопка диалога (FAB) ---------- */
+/* Кнопку можно перетащить: положение живёт в переменных --fabr/--fabb. */
+.dock.collapsed{left:auto!important;right:var(--fabr,16px)!important;width:auto!important;padding:0!important;bottom:var(--fabb,34px)!important;transition:none}
+.dock.collapsed.dragfab .fab{transform:scale(1.06);box-shadow:0 18px 40px var(--shadow-deep),0 0 0 1px var(--edge)}
+.dock.collapsed.dragfab .fab::after{animation:none}
+.dock.collapsed .dockcollapsed{padding:0!important;gap:0!important;justify-content:flex-end!important}
+.fab{
+ position:relative;width:60px;height:60px;min-height:60px;border-radius:999px;display:grid;place-items:center;
+ background:var(--glass);color:var(--ink-accent);border:0;
+ backdrop-filter:blur(26px) saturate(170%);-webkit-backdrop-filter:blur(26px) saturate(170%);
+ box-shadow:0 10px 30px var(--shadow-soft),0 0 0 1px var(--edge);
+ transition:transform .16s;
+}
+/* живое кольцо с переливом — тонкая рамка из вращающегося градиента */
+.fab::before{
+ content:'';position:absolute;inset:-1.5px;border-radius:inherit;padding:1.5px;
+ background:conic-gradient(from 0deg,var(--lime),#7fe3c6,#8bb8ff,#c9a6ff,var(--lime));
+ -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+ -webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude;
+ animation:fabspin 7s linear infinite;
+}
+/* мягкое дыхание вокруг кнопки */
+.fab::after{
+ content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+ box-shadow:0 0 0 0 color-mix(in srgb,var(--lime) 26%,transparent);
+ animation:fabbreath 3.6s ease-in-out infinite;
+}
+.fabcore{display:grid;place-items:center;position:relative;z-index:1}
+@keyframes fabspin{to{transform:rotate(360deg)}}
+@keyframes fabbreath{50%{box-shadow:0 0 0 7px color-mix(in srgb,var(--lime) 8%,transparent)}}
+.fab .ico{width:25px;height:25px;stroke-width:1.7;color:var(--lime)}
+.fab:active{transform:scale(.93)}
+/* запись */
+.fab.listening,.fab.recording{background:var(--rec-line)}
+.fab.listening .ico,.fab.recording .ico{color:#fff}
+.fab.listening::before,.fab.recording::before{animation:none;background:#fff}
+.fab.listening::after,.fab.recording::after{animation:fabpulse 1.2s ease-in-out infinite}
+@keyframes fabpulse{50%{box-shadow:0 0 0 12px color-mix(in srgb,var(--rec-line) 20%,transparent)}}
+@media(prefers-reduced-motion:reduce){.fab::before,.fab::after{animation:none}}
+
+/* Как в cTrader: капсулы лежат поверх поля свечей, сразу над полосой оси времени.
+   Отдельной полосы под график не отводится — холст занимает всю высоту. */
+.ctbar{bottom:34px}
+.toolsrail{bottom:86px}
+
+.copilotbar::-webkit-scrollbar{display:none}
+.copilotbar .chip{
+ flex-shrink:0;background:var(--glass);border:1px solid var(--edge);color:var(--text);
+ backdrop-filter:blur(24px) saturate(170%);-webkit-backdrop-filter:blur(24px) saturate(170%);
+ box-shadow:var(--sheen),0 6px 18px var(--shadow-soft);
+}
+.copilotclose{
+ flex-shrink:0;width:36px;height:36px;min-height:36px;border-radius:50%;color:var(--muted);
+ background:var(--glass);border:1px solid var(--edge);
+ backdrop-filter:blur(24px) saturate(170%);-webkit-backdrop-filter:blur(24px) saturate(170%);
+ box-shadow:var(--sheen);
+}
+.copilotclose .ico{width:16px;height:16px;stroke-width:2.2}
+
+/* подсказки построения живут в шапке графика, на одной линии с переключателем */
+.copilotbar{display:flex;gap:7px;align-items:center;min-width:0;overflow-x:auto;scrollbar-width:none}
+.copilotbar::-webkit-scrollbar{display:none}
+.copilotbar .chip{flex-shrink:0;color:var(--text);border-color:var(--edge);background:var(--glass-soft)}
+
+/* ---------- полоса контролов под графиком ----------
+   Холст заканчивается выше неё, поэтому ось времени и ценник
+   не перекрываются ни капсулами, ни плавающей кнопкой. */
+/* Холст на весь экран, контролы — поверх него. */
+.main.fullscreen .ctbar{bottom:34px}
+.main.fullscreen .toolsrail{bottom:86px}
+/* Высота кнопки одна и та же на холсте бота и в полноэкранном графике — без скачка. */
+
+/* пока диалог раскрыт, контролы графика под ним не видны и не ловят нажатия */
+.main:has(.dock:not(.collapsed)) .ctbar,
+.main:has(.dock:not(.collapsed)) .toolsrail{opacity:0;pointer-events:none;transition:opacity .2s}
+
+/* ---------- маркетинговый баннер счёта ---------- */
+.promo{
+ display:flex;align-items:center;gap:12px;margin-bottom:12px;padding:12px 12px 12px 14px;
+ border-radius:16px;border:1px solid var(--accent-edge);background:var(--accent-soft);
+}
+.promo b{display:block;font-size:15px;font-weight:600}
+.promo small{display:block;font-size:13px;color:var(--muted);margin-top:1px}
+.promoico{width:34px;height:34px;flex-shrink:0;display:grid;place-items:center;border-radius:11px;background:var(--surface);color:var(--ink-accent)}
+.promoico .ico{width:18px;height:18px}
+.promobtn{flex-shrink:0;height:34px;min-height:34px;padding:0 14px;border-radius:999px;background:var(--lime);color:var(--on-lime);font-size:14px;font-weight:560}
+.promobtn:active{transform:scale(.96)}
+.promoclose{width:30px;height:30px;min-height:30px;flex-shrink:0;border-radius:50%;color:var(--muted)}
+.promoclose .ico{width:15px;height:15px}
+
+/* ---------- виджеты рабочего стола ---------- */
+.wcard{border:1px solid var(--line);border-radius:16px;background:var(--card);padding:12px 14px;margin-bottom:10px}
+.whead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}
+.whead b{font-size:15px;font-weight:600}
+.whead small{color:var(--muted);font-size:13px}
+/* новости */
+.newsrow{display:flex;align-items:flex-start;gap:10px;width:100%;text-align:left;padding:8px 0;border-top:1px solid var(--line)}
+.newsrow:first-of-type{border-top:0}
+.newsrow.static{cursor:default}
+.newsrow b{display:block;font-size:15px;font-weight:500;line-height:1.35}
+.newsrow small{display:block;color:var(--muted);font-size:13px;margin-top:2px}
+.dotimp{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:6px;background:var(--handle)}
+.dotimp.hi{background:var(--red)}
+.dotimp.mid{background:var(--lime)}
+.dotimp.low{background:var(--handle)}
+/* рынки */
+.mkrow{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
+.mkrow::-webkit-scrollbar{display:none}
+.mkcell{flex-shrink:0;display:flex;flex-direction:column;gap:2px;align-items:flex-start;padding:8px 12px;border-radius:12px;border:1px solid var(--line);background:var(--sunken);min-width:96px}
+.mkcell b{font-size:13px;font-weight:560;color:var(--text)}
+.mkcell span{font-size:14px;font-weight:600}
+.mkcell.on{border-color:var(--accent-edge);background:var(--accent-soft)}
+.mkcell:active{transform:scale(.97)}
+/* события */
+.evrow{display:flex;align-items:center;gap:10px;padding:7px 0;border-top:1px solid var(--line);font-size:15px}
+.evrow:first-of-type{border-top:0}
+
+/* блок графиков не должен липнуть к тому, что идёт под ним */
+.overview>.charts{margin-bottom:12px}
+/* В полноэкранном графике отбивки до виджетов нет — иначе снизу светится полоса фона. */
+.main.fullscreen .overview>.charts{margin-bottom:0}
+
+/* ---------- дымка под шапкой ----------
+   Контент уезжает под плавающие капсулы, поэтому над ним лежит полоса
+   с размытием, гаснущая книзу: шапка читается на любом содержимом. */
+.main::before{
+ content:'';position:absolute;top:0;left:0;right:0;z-index:15;pointer-events:none;
+ height:calc(env(safe-area-inset-top,0px) + 84px);
+ backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+ -webkit-mask-image:linear-gradient(to bottom,#000 0,#000 52%,transparent 100%);
+ mask-image:linear-gradient(to bottom,#000 0,#000 52%,transparent 100%);
+ background:linear-gradient(to bottom,var(--page) 0%,color-mix(in srgb,var(--page) 55%,transparent) 55%,transparent 100%);
+}
+@media(prefers-reduced-transparency:reduce){.main::before{backdrop-filter:none;-webkit-backdrop-filter:none}}
+
+/* ============================================================
+   КЛОН ОСНОВНОГО ПРОТОТИПА: вход в ассистента — не кнопка, а панель.
+   Свёрнутое состояние диалога перестаёт быть плавающей кнопкой и
+   становится щелью боттом-шита, которая всегда на экране: в ней
+   видна ручка и строка ввода с микрофоном. Ниже щели панель не уходит.
+   ============================================================ */
+.main{--peek:118px}
+.dock.collapsed{
+ height:auto!important;   /* по содержимому: строка ввода растёт — растёт и щель */left:0!important;right:0!important;bottom:0!important;
+ width:auto!important;padding:0!important;max-height:none;overflow:hidden;
+ background:var(--glass);border-top:1px solid var(--edge);border-radius:22px 22px 0 0;
+ backdrop-filter:blur(30px) saturate(170%);-webkit-backdrop-filter:blur(30px) saturate(170%);
+ box-shadow:var(--sheen),0 -14px 40px var(--shadow-soft);
+ transition:height .3s cubic-bezier(.32,.72,0,1);
+}
+.dock.collapsed .dockcollapsed{display:none!important}   /* плавающая кнопка больше не нужна */
+.dock.collapsed .dockhandle{display:grid;height:30px;min-height:30px}
+.dock.collapsed .dockhandle span{width:38px;background:var(--handle)}
+.dock.collapsed .composer{display:flex;padding-bottom:calc(14px + env(safe-area-inset-bottom))}
+.dock.collapsed .docktitle,.dock.collapsed .messages,.dock.collapsed .quickactions{display:none}
+
+/* Контент не прячется под щелью */
+.overview{padding-bottom:calc(var(--peek) + 20px)}
+.main.fullscreen .overview{padding-bottom:var(--peek)!important}
+.main.fullscreen .overview>.charts{margin-bottom:0}
+/* Холст уже заканчивается над щелью, поэтому капсулы стоят от его края, а не от экрана. */
+.ctbar,.main.fullscreen .ctbar{bottom:34px}
+.toolsrail,.main.fullscreen .toolsrail{bottom:86px}
+
+/* Режим «только график»: панели нет, её место занимает плавающая кнопка с микрофоном. */
+.main.immersive .overview{padding-bottom:0!important}
+.fabmic{position:absolute;right:16px;bottom:34px;z-index:9}
+.fabmic .fab{position:relative;width:60px;height:60px;min-height:60px}
+.fabmic .fab .ico{width:25px;height:25px}
+/* второй значок — микрофон в углу кнопки */
+.fabmic .fab>.ico:last-child{position:absolute;right:9px;bottom:8px;width:15px;height:15px;color:var(--text);opacity:.85}
+/* Кнопка режима стоит в левой капсуле, рядом с «назад». */
+.capsule .iconbtn.on{background:var(--accent-soft);color:var(--ink-accent)}
+/* Режим — своя капсула, стоит под кнопкой «назад». */
+.capsule.mode{position:absolute;left:0;top:56px;padding:0 6px;gap:0;z-index:3}
+
+/* ---------- экранная клавиатура прототипа ---------- */
+.main.kb{--kbh:300px}
+.main.kb .dock{bottom:var(--kbh)!important;max-height:calc(100% - 70px - var(--kbh))}
+.kbd{
+ position:absolute;left:0;right:0;bottom:0;z-index:20;height:var(--kbh,300px);
+ display:flex;flex-direction:column;gap:9px;padding:10px 4px calc(10px + env(safe-area-inset-bottom));
+ background:var(--glass);border-top:1px solid var(--edge);
+ backdrop-filter:blur(30px) saturate(170%);-webkit-backdrop-filter:blur(30px) saturate(170%);
+ box-shadow:0 -14px 40px var(--shadow-soft);
+ animation:kbin .24s cubic-bezier(.32,.72,0,1);
+}
+@keyframes kbin{from{transform:translateY(100%)}to{transform:none}}
+.kbrow{display:flex;gap:5px;justify-content:center;flex:1}
+.key{
+ flex:1;min-width:0;min-height:0;display:grid;place-items:center;border-radius:8px;
+ background:var(--raised);color:var(--text);font-size:19px;line-height:1;
+ box-shadow:0 1px 0 var(--shadow-deep);
+}
+.key:active{background:var(--hover)}
+.key.wide{flex:1.5;font-size:16px;color:var(--muted);background:var(--control)}
+.key.wide.on{background:var(--accent-soft);color:var(--ink-accent)}
+.key.space{flex:4.2;font-size:15px;color:var(--muted)}
+.key.send{flex:1.2;background:var(--lime);color:var(--on-lime)}
+.key .ico{width:19px;height:19px}
+@media(prefers-reduced-motion:reduce){.kbd{animation:none}}
+
+/* Подсказка поверх экрана: ответ на действие, ради которого панель не раскрываем. */
+.toast{
+ position:fixed;left:50%;transform:translateX(-50%);bottom:calc(var(--peek, 118px) + 26px);z-index:40;
+ max-width:min(440px,88vw);padding:11px 16px;border-radius:16px;font-size:15px;line-height:1.35;
+ color:var(--text);background:var(--glass);border:1px solid var(--edge);
+ backdrop-filter:blur(26px) saturate(170%);-webkit-backdrop-filter:blur(26px) saturate(170%);
+ box-shadow:var(--sheen),0 12px 34px var(--shadow-soft);
+ animation:toastin .24s cubic-bezier(.32,.72,0,1);transition:opacity .35s,transform .35s;
+}
+.toast.out{opacity:0;transform:translateX(-50%) translateY(8px)}
+@keyframes toastin{from{opacity:0;transform:translateX(-50%) translateY(10px)}to{opacity:1;transform:translateX(-50%)}}
+@media(prefers-reduced-motion:reduce){.toast{animation:none}}
+/* Микрофон в строке ввода во время записи */
+.composer .circbtn.rec{background:var(--rec-line);color:#fff;border-radius:50%;animation:recpulse 1.2s ease-in-out infinite}
+@keyframes recpulse{50%{box-shadow:0 0 0 9px color-mix(in srgb,var(--rec-line) 18%,transparent)}}
+/* Строка ввода в щели растёт по тексту, а не режет его. */
+.dock.collapsed .composer .inputbox{height:auto;min-height:48px;align-items:flex-end;border-radius:24px;padding:4px 4px 4px 18px}
+.dock.collapsed .composer .inputbox textarea{height:auto;min-height:40px;max-height:110px;overflow-y:auto}
+.dock.collapsed .composer .sendbtn,.dock.collapsed .composer .circbtn{align-self:flex-end;margin-bottom:0}
+
+/* ---------- обмен содержимым: диалог на экране, рабочий стол в шторке ----------
+   Строка ввода не переезжает: она всегда внизу шторки. Поэтому шторка не может
+   её перекрыть — она её и держит. Диалог на экране кончается над щелью шторки. */
+.docktitle .swapbtn{width:36px;height:36px;min-height:36px;border-radius:50%;color:var(--ink-accent);background:var(--accent-soft);border:1px solid var(--accent-edge);transition:transform .15s}
+.docktitle .swapbtn:active{transform:scale(.92)}
+.docktitle .swapbtn .ico{width:18px;height:18px;stroke-width:2}
+/* корешок рабочего стола: виден и в свёрнутой шторке */
+.dock.swapped.collapsed .docktitle{display:flex}
+.docktitle.dashpeek{padding:0 14px 6px 10px}
+.peekbtn{display:flex;align-items:center;gap:10px;text-align:left;min-height:44px;padding:0 6px;border-radius:12px}
+.peekbtn .ico{color:var(--ink-accent);flex-shrink:0}
+.peekbtn b{display:block;font-size:15px;font-weight:600;line-height:1.25}
+.peekbtn small{display:block;font-size:13px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-variant-numeric:tabular-nums}
+.dockdash{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:4px 16px 12px}
+.dock.collapsed .dockdash{display:none}
+.dockdash>.charts{margin-bottom:12px}
+@media(min-width:701px){.dockdash .summarygrid{grid-template-columns:repeat(4,1fr)}}
+/* диалог на экране */
+.chatmain{flex:1;min-height:0;display:flex;flex-direction:column;padding-top:calc(env(safe-area-inset-top,0px) + 74px);padding-bottom:calc(var(--peek) + 6px)}
+.chatmain .messages{padding:8px 16px 10px}
+.chatmain .quickactions{padding-bottom:10px}
+.main.kb .chatmain{padding-bottom:calc(var(--peek) + var(--kbh) + 6px)}
+@media(min-width:1000px){.chatmain .messages,.chatmain .quickactions{padding-left:44px;padding-right:44px}}
+@keyframes swapin{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.main.swapin .chatmain,.main.swapin .overview,.main.swapin .dock>:not(.dockhandle){animation:swapin .3s cubic-bezier(.32,.72,0,1)}
+
+/* ---------- обмен, редакция 2: ввод принадлежит диалогу ----------
+   Внутри одной стеклянной плиты с «Рабочим столом» поле ввода читалось как часть шторки.
+   Теперь это две вещи: полоса ввода у нижнего края — слой диалога, без своей подложки;
+   над ней — шторка рабочего стола отдельной карточкой со скруглением со всех сторон. */
+.main{--barh:0px}
+.chatbar{position:absolute;left:0;right:0;bottom:0;z-index:10;padding:8px 12px calc(12px + env(safe-area-inset-bottom))}
+.chatbar .composer{padding:0}
+.chatbar .composer .inputbox{height:auto;min-height:48px;align-items:flex-end;border-radius:24px;padding:4px 4px 4px 18px}
+.chatbar .composer .inputbox textarea{height:auto;min-height:40px;max-height:110px;overflow-y:auto}
+.chatbar .composer .sendbtn,.chatbar .composer .circbtn{align-self:flex-end}
+.dock.swapped,.dock.swapped.collapsed{
+ left:10px!important;right:10px!important;bottom:var(--barh)!important;
+ border:1px solid var(--edge);border-radius:22px;max-height:calc(100% - 70px - var(--barh))}
+.dock.swapped.collapsed .docktitle{padding-bottom:10px}
+.main.kb .chatbar{bottom:var(--kbh)}
+.main.kb .dock.swapped{bottom:calc(var(--kbh) + var(--barh))!important;max-height:calc(100% - 70px - var(--kbh) - var(--barh))}
+@media(min-width:1000px){.dock.swapped,.dock.swapped.collapsed{left:26px!important;right:26px!important}.chatbar{padding-left:26px;padding-right:26px}}
