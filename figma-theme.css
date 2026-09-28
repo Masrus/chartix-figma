@@ -429,3 +429,37 @@ dialog>*>p,dialog p.lead{font-size:15px;line-height:22px}
 .chatmain .quickactions{padding-bottom:calc(var(--pill) + 40px + env(safe-area-inset-bottom))}
 .main.kb .chatmain{padding-bottom:calc(var(--kbh))}
 .overview{padding-bottom:calc(var(--peek) + 12px)}
+
+/* ============================================================
+   ПРАВКИ ПО МАКЕТУ: замеры сделаны на схеме (масштаб 2×, экран 393pt)
+   таблетка 353×80, боковые поля 20, кнопка микрофона 40, справа 20,
+   слева 28 (как в bottom-bar), ручка 40×3 в 6pt от верхнего края.
+   ============================================================ */
+.main{--pill:80px}
+.chatbar .composer{height:80px;margin:0 20px calc(20px + env(safe-area-inset-bottom));padding:0 20px 0 28px;gap:16px}
+.chatbar .composer .plusbtn,.chatbar .composer .vdiv{display:none}
+.chatbar .composer .inputbox textarea{padding:6px 0}
+.chatbar .composer .dockhandle{top:0;width:120px;height:18px;min-height:18px;padding-top:6px}
+.chatbar .composer .dockhandle span,.dock .sheethandle span{width:40px;height:3px;background:#bcbcbc;border-radius:32px}
+
+/* когда шторка раскрыта, ручка живёт на шторке, а не на таблетке */
+.main .dock:not(.collapsed)~.chatbar .pillhandle{opacity:0;pointer-events:none}
+.dock .sheethandle{position:absolute;top:0;left:50%;transform:translateX(-50%);width:120px;height:22px;min-height:22px;display:grid;place-items:start center;padding-top:8px;z-index:3;touch-action:none}
+.dock .docktitle{padding-top:26px}
+
+/* тень шторки. У Apple числовых значений тени в HIG нет; за основу взят слой
+   «sheets» из гайдов SAP Fiori for iOS (0 0 2px / .13), сверху добавлена
+   мягкая тень вверх — шторка стоит над контентом, а не рядом с ним */
+.main .dock,.main .dock.swapped{box-shadow:0 -2px 36px 0 rgba(0,0,0,.10)}
+:root:not([data-theme="light"]) .main .dock,:root:not([data-theme="light"]) .main .dock.swapped{box-shadow:0 0 2px rgba(0,0,0,.4),0 -12px 40px rgba(0,0,0,.5)}
+.dock .docktitle b.chat{font-size:20px;line-height:28px}
+
+/* тень шторки — из макета Figma */
+.main .dock,.main .dock.swapped{border-radius:32px 32px 0 0;box-shadow:0 -2px 36px 0 rgba(0,0,0,.10)}
+:root:not([data-theme="light"]) .main .dock,:root:not([data-theme="light"]) .main .dock.swapped{box-shadow:0 -2px 36px 0 rgba(0,0,0,.5)}
+/* контент шторки уходит под таблетку не резким срезом, а в лёгкую дымку цвета шторки */
+.main .dock:not(.collapsed)::after{content:"";position:absolute;left:0;right:0;bottom:0;height:calc(var(--pill) + 44px + env(safe-area-inset-bottom));background:linear-gradient(to top,var(--sheetbg) 45%,transparent);pointer-events:none;z-index:1}
+/* шторка едет плавно и доезжает до остановки */
+.main .dock{transition:height .42s cubic-bezier(.32,.72,0,1)}
+.main .dock.dragging{transition:none}
+.dock .daypill,.chatmain .daypill{position:static}
