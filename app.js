@@ -145,10 +145,23 @@ function dashHTML(a){
  return runPanel(a)+(k==='catalog'?(expanded?chartHTML(a):catalogHTML(a)):k==='trade'?(expanded?chartHTML(a):workspaceHTML(a)):k==='ops'?riskHTML(a):infoHTML(a))
 }
 function swapContent(){
- swapped=!swapped;dock='small';closeKeyboard();render();
- const m=document.querySelector('.main');
- if(m){m.classList.add('swapin');setTimeout(()=>m.classList.remove('swapin'),320)}
+ // Обмен слоёв: старый нижний слой сжимается в карточку, у неё появляется ручка,
+ // затем верхний край падает на таблетку, а ручка карточки доезжает до ручки таблетки.
+ const root=document.documentElement;
+ const go=()=>{swapped=!swapped;root.classList.replace('vt-old','vt-new');render()};
+ const reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+ if(!document.startViewTransition||reduce){swapped=!swapped;render();return}
+ // ручка карточки — отдельный элемент, живёт только в старом состоянии и едет своим путём
+ if(dock==='small'&&!expanded){const m=document.querySelector('.main');if(m){const fh=document.createElement('div');fh.className='foldhandle';m.appendChild(fh)}}
+ root.classList.add('vt-old');
+ const t=document.startViewTransition(go);
+ const toPill=dock==='small'&&!expanded;
+ // по гифке: слой начинает падать на 500 мс, таблетка начинает сжиматься через ≈240 мс после начала падения
+ if(toPill)setTimeout(blinkPill,740);
+ t.finished.finally(()=>{root.classList.remove('vt-old','vt-new')});
 }
+// Когда слой или шторка доехали до таблетки, она «моргает»: чуть сжимается и возвращается к обычному размеру.
+function blinkPill(){const c=$('composer');if(!c)return;c.classList.remove('blink','catch');void c.offsetWidth;c.classList.add('blink')}
 // Видимый прогресс прямо на экране помощника, а не только в переписке.
 function runPanel(a){
  const r=live(a.id)[0];if(!r)return '';
@@ -968,6 +981,8 @@ function fabHTML(){
 }
 function toggleImmersive(){immersive=!immersive;if(!immersive)dock='small';render()}
 function setDock(size,focus=false){dock=size;if(size==='small')closeKeyboard();const el=$('dock');if(!el)return;const was=el.classList.contains('collapsed');el.style.setProperty('--dock',size==='small'?'118px':size==='half'?'57%':size==='large'?'85%':size);el.classList.toggle('collapsed',size==='small');
+ // шторка сворачивается в строку ввода: таблетка «принимает» её лёгким толчком
+ if(size==='small'&&!was){const c=$('composer');if(c){c.classList.remove('blink','catch');void c.offsetWidth;c.classList.add('catch')}}
  // графики в свёрнутой шторке не рисовались — у скрытого холста нет размера
  if(was&&size!=='small')requestAnimationFrame(bindCharts);
  if(size==='small')requestAnimationFrame(syncPeek);
