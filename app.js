@@ -801,19 +801,18 @@ function chatHTML(a){
 // Когда в шторке рабочий стол, шапка видна и в свёрнутом виде: это его корешок с ценой.
 function dockTitleHTML(a,sw){
  // Шапка шторки: что в ней лежит, среда бота и «закрыть» — шторка уезжает вниз, остаётся только строка ввода.
- return '<div class="docktitle">'+avatar(a)+'<b class="grow">'+(sw?esc(a.name):'Диалог с ботом')+'</b><button class="iconbtn" aria-label="Облачная среда бота" onclick="envSheet()">'+icon('computer')+'</button><button class="iconbtn closebtn" aria-label="Свернуть шторку" onclick="setDock(\'small\')">'+icon('close')+'</button></div>'
+ return '<div class="docktitle">'+avatar(a)+'<b class="grow'+(sw?'':' chat')+'">'+(sw?esc(a.name):'Диалог с ботом')+'</b><button class="iconbtn" aria-label="Облачная среда бота" onclick="envSheet()">'+icon('computer')+'</button><button class="iconbtn closebtn" aria-label="Свернуть шторку" onclick="setDock(\'small\')">'+icon('close')+'</button></div>'
 }
 function dockHTML(a,sw){
  const h=dock==='small'?'118px':dock==='large'?'85%':dock==='half'?'57%':dock;
  // Шторка — только содержимое. Строка ввода принадлежит ассистенту и стоит поверх обоих слоёв,
  // шторка раскрывается из-под неё: ручка сидит на самой строке.
- return '<section class="dock '+(dock==='small'?'collapsed':'')+(sw?' swapped':'')+'" id="dock" style="--dock:'+h+'">'+dockTitleHTML(a,sw)+(sw?'<div class="dockdash">'+dashHTML(a)+'</div>':chatHTML(a))+'</section>'
+ return '<section class="dock '+(dock==='small'?'collapsed':'')+(sw?' swapped':'')+'" id="dock" style="--dock:'+h+'"><button type="button" class="dockhandle sheethandle" aria-label="Потяните вниз, чтобы свернуть шторку"><span></span></button>'+dockTitleHTML(a,sw)+(sw?'<div class="dockdash">'+dashHTML(a)+'</div>':chatHTML(a))+'</section>'
  +'<div class="chatbar" id="chatbar">'+composerHTML()+'</div>'
 }
 function composerHTML(){
- return '<form class="composer" id="composer"><button type="button" class="dockhandle" id="dockhandle" aria-label="Потяните вверх, чтобы открыть шторку"><span></span></button>'
- +'<button type="button" class="iconbtn plusbtn" aria-label="Добавить">'+icon('plus')+'</button><span class="vdiv"></span>'
- +'<div class="inputbox"><textarea rows="1" id="prompt" aria-label="Поручение боту" placeholder="Поручите задачу…" onpointerdown="openKeyboard()" onblur="promptBlur()"></textarea><button class="iconbtn send sendbtn" aria-label="Отправить поручение">'+icon('arrow')+'</button></div>'
+ return '<form class="composer" id="composer"><button type="button" class="dockhandle pillhandle" id="dockhandle" aria-label="Потяните вверх, чтобы открыть шторку"><span></span></button>'
+ +'<div class="inputbox"><textarea rows="1" id="prompt" aria-label="Поручение боту" placeholder="Поручите задачу…"></textarea><button class="iconbtn send sendbtn" aria-label="Отправить поручение">'+icon('arrow')+'</button></div>'
  +'<button type="button" class="iconbtn circbtn" id="micbtn" aria-label="Удерживайте, чтобы надиктовать. Отпустите — поручение уйдёт">'+icon('mic')+'</button></form>'
 }
 function messageHTML(a,m,grouped,i){
@@ -891,7 +890,8 @@ function growPrompt(){
  syncPeek()
 }
 
-function openKeyboard(){
+function openKeyboard(){return; // экранной клавиатуры прототипа больше нет: работает системная
+
  if(kb)return;const m=document.querySelector('.main');if(!m)return;
  kb=true;m.classList.add('kb');
  // Панель не трогаем: рабочее пространство остаётся на экране, раскрывает её сам пользователь.
@@ -1000,13 +1000,23 @@ function bindDock(){
  $('composer').onsubmit=e=>{e.preventDefault();const v=$('prompt').value.trim();if(v){$('prompt').value='';command(v);if(kb)$('prompt')?.focus()}};
  $('prompt').oninput=growPrompt;
  $('prompt').onkeydown=e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();$('composer').requestSubmit()}};
- const h=$('dockhandle');let start=0,height=0,moved=false;
- h.onpointerdown=e=>{start=e.clientY;height=$('dock').getBoundingClientRect().height;moved=false;dragging=true;h.setPointerCapture(e.pointerId);$('dock').classList.add('dragging')};
- h.onpointermove=e=>{if(!h.hasPointerCapture(e.pointerId))return;const diff=start-e.clientY;if(Math.abs(diff)>5)moved=true;
-  if(moved&&diff<0&&kb)closeKeyboard();      // пошли сворачивать — клавиатура не нужна
-  if(moved){const max=document.querySelector('.main').clientHeight-75;setDock(Math.max(112,Math.min(max,height+diff))+'px')}};
- h.onpointerup=e=>{h.releasePointerCapture(e.pointerId);dragging=false;$('dock').classList.remove('dragging');if(!moved)setDock(dock==='small'?'half':'small');else if($('dock').clientHeight<160)setDock('small')};
- h.onclick=e=>{if(e.detail===0)setDock(dock==='small'?'half':'small')}
+ document.querySelectorAll('.dockhandle').forEach(h=>{let start=0,height=0,moved=false;
+  // Ручка на таблетке видна, пока шторка свёрнута; развернулась — тянуть дальше нужно за ручку шторки.
+  h.onpointerdown=e=>{start=e.clientY;height=$('dock').getBoundingClientRect().height;moved=false;dragging=true;h.setPointerCapture(e.pointerId);$('dock').classList.add('dragging')};
+  h.onpointermove=e=>{if(!h.hasPointerCapture(e.pointerId))return;const diff=start-e.clientY;if(Math.abs(diff)>5)moved=true;
+   if(moved){const max=document.querySelector('.main').clientHeight-75;setDock(Math.max(112,Math.min(max,height+diff))+'px')}};
+  h.onpointerup=e=>{try{h.releasePointerCapture(e.pointerId)}catch{}dragging=false;$('dock').classList.remove('dragging');
+   if(!moved){setDock(dock==='small'?'half':'small');return}
+   // Как у системных шторок: отпустили — она доезжает до ближайшей «остановки»: закрыта, средняя, высокая.
+   // Тянули вверх — уходим на ступень выше, вниз — на ступень ниже; далеко утащили — берём ближайшую.
+   const H=document.querySelector('.main').clientHeight,ds=[0,H*.57,H*.85],names=['small','half','large'];
+   const near=v=>ds.reduce((b,d,i)=>Math.abs(d-v)<Math.abs(ds[b]-v)?i:b,0);
+   const cur=$('dock').getBoundingClientRect().height,diff=start-e.clientY,i0=near(height);
+   let t=near(cur);
+   if(diff>30)t=Math.max(t,Math.min(i0+1,2));else if(diff<-30)t=Math.min(t,Math.max(i0-1,0));
+   setDock(names[t])};
+  h.onclick=e=>{if(e.detail===0)setDock(dock==='small'?'half':'small')}
+ })
 }
 /* Панель диалога переживает переходы: высоту, на которую её вытянул пользователь,
    не сбрасывает ни вход в полноэкранный график, ни возврат из него. */
