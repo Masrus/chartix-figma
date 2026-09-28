@@ -1,0 +1,362 @@
+/* ============================================================
+   КАТАЛОГ ВИДЖЕТОВ WORKSPACE — формы и визуальная масса.
+   Большой элемент — график. Крупные аналитические блоки шире и выше.
+   Списки плотные. Сводки маленькие. Статусы почти незаметны.
+   ============================================================ */
+
+.wgintro{padding:14px 16px;border-radius:16px;border:1px solid var(--line);background:var(--card);margin-bottom:12px}
+.wgintro b{display:block;font-size:16px;font-weight:600;margin-bottom:4px}
+.wgintro small{display:block;color:var(--muted);font-size:13px;line-height:1.45}
+
+.wgsec{display:flex;align-items:baseline;gap:10px;margin:22px 0 10px;font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);font-weight:600}
+.wgsec small{text-transform:none;letter-spacing:0;font-weight:400;font-size:13px;opacity:.85}
+
+.wg{border:1px solid var(--line);border-radius:16px;background:var(--card);padding:12px;margin-bottom:10px}
+.wghead{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.wghead b{font-size:15px;font-weight:600}
+.wghead .tag{margin-left:auto}
+.wgnote{margin-top:8px;font-size:13px;color:var(--muted)}
+
+/* ---------- маленькие сводки ---------- */
+.snap{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.snapmain small{display:block;font-size:13px;color:var(--muted)}
+.snapmain b{display:block;font-size:30px;line-height:1.1;letter-spacing:-1px;font-weight:550;margin:2px 0}
+.snapmain span{font-size:14px}
+.snapgrid,.wgspread{display:flex;gap:8px;flex:1;min-width:0;flex-wrap:wrap;justify-content:flex-end}
+.snapcell{min-width:74px;padding:7px 10px;border-radius:11px;background:var(--sunken);border:1px solid var(--line)}
+.snapcell b{display:block;font-size:15px;font-weight:600}
+.snapcell small{display:block;font-size:12px;color:var(--muted);margin-top:1px}
+.wgacc{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.accell{padding:8px 10px;border-radius:11px;background:var(--sunken);border:1px solid var(--line)}
+.accell b{display:block;font-size:16px;font-weight:600}
+.accell small{display:block;font-size:12px;color:var(--muted);margin-top:1px}
+
+/* ---------- списки ---------- */
+.wgrows{display:flex;flex-direction:column}
+.wgrow{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:9px 6px;border-radius:10px;border-bottom:1px solid var(--line);font-size:15px}
+.wgrow:last-child{border-bottom:0}
+button.wgrow:active{background:var(--hover)}
+.wgrow b{display:block;font-size:15px;font-weight:600}
+.wgrow small{display:block;font-size:12px;color:var(--muted);margin-top:1px}
+.wgrow .c1{font-weight:600;min-width:78px}
+.wgrow .c2{margin-left:auto;font-variant-numeric:tabular-nums}
+.wgrow .c3{min-width:62px;text-align:right;font-variant-numeric:tabular-nums}
+.wgrow .time{font-size:12px;color:var(--muted);min-width:62px;font-variant-numeric:tabular-nums}
+.wgrow .metric{font-size:13px;color:var(--ink-accent);white-space:nowrap}
+.wgrow .num,.wgtable .num{display:inline-grid;place-items:center;width:18px;height:18px;margin-right:8px;border-radius:6px;background:var(--sunken);border:1px solid var(--line);font-size:12px;color:var(--muted)}
+.spark{width:60px;height:20px;flex-shrink:0;opacity:.9}
+
+.dir{font-size:12px;font-weight:700;letter-spacing:.5px;padding:3px 7px;border-radius:6px;flex-shrink:0}
+.dir.long{background:color-mix(in srgb,var(--up) 18%,transparent);color:var(--up)}
+.dir.short{background:color-mix(in srgb,var(--down) 20%,transparent);color:var(--down)}
+.st{font-size:12px;color:var(--muted);white-space:nowrap}
+.st.on{color:var(--ink-accent)}
+.st.off{opacity:.55}
+.sw{width:30px;height:18px;border-radius:999px;background:var(--track);position:relative;flex-shrink:0}
+.sw::after{content:'';position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:var(--handle);transition:transform .16s}
+.sw.on{background:var(--accent-soft)}
+.sw.on::after{background:var(--ink-accent);transform:translateX(12px)}
+
+/* ---------- таблицы ---------- */
+.wgtable{display:flex;flex-direction:column;font-size:14px}
+.wgtable .th{display:flex;gap:8px;padding:0 6px 6px;font-size:12px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);border-bottom:1px solid var(--line)}
+.wgtable .tr{display:flex;gap:8px;align-items:center;width:100%;text-align:left;padding:9px 6px;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+.wgtable .tr:last-child{border-bottom:0}
+button.wgtable-tr:active,.wgtable button.tr:active{background:var(--hover)}
+.wgtable .th span,.wgtable .tr span{flex:1;min-width:0}
+.wgtable .th .grow,.wgtable .tr .grow{flex:2.2}
+.wgtable .time{color:var(--muted);font-size:13px}
+.wgtable.pending .tr{border-left:2px dashed var(--line-strong);border-radius:0 8px 8px 0;padding-left:8px}
+.wgtable.tape .tr{padding:6px}
+.wgtable.cal .tr .grow{display:flex;align-items:center;gap:7px}
+.dotimp{width:7px;height:7px;border-radius:50%;flex-shrink:0;background:var(--handle)}
+.dotimp.hi{background:var(--red)}
+.dotimp.mid{background:var(--lime)}
+.dotimp.low{background:var(--dot)}
+.muted{color:var(--muted)}
+
+/* ---------- аналитика ---------- */
+.wgtez{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px;font-size:15px;line-height:1.45}
+.wgtez li::marker{color:var(--muted)}
+.inl{display:inline;padding:1px 6px;border-radius:6px;background:var(--accent-soft);color:var(--ink-accent);font-size:14px;border:1px solid var(--accent-edge)}
+.inl:active{transform:scale(.97)}
+
+.wgdefs{display:flex;flex-direction:column}
+.wgdefs .def{display:flex;gap:12px;align-items:baseline;padding:8px 4px;border-bottom:1px solid var(--line);font-size:15px}
+.wgdefs.tight .def{padding:6px 4px}
+.wgdefs .def:last-child{border-bottom:0}
+.wgdefs .def span{min-width:92px;color:var(--muted);font-size:13px}
+.wgdefs .def b{font-weight:500;flex:1}
+
+.wgfile{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:10px;border-radius:12px;border:1px solid var(--line);background:var(--sunken)}
+.wgfile:active{background:var(--hover)}
+.wgfile b{display:block;font-size:15px;font-weight:600}
+.wgfile small{display:block;font-size:12px;color:var(--muted)}
+.wgcode{margin:0;padding:12px;border-radius:12px;background:var(--term-bg);color:var(--term-ink);font:12.5px/1.6 ui-monospace,SFMono-Regular,Menlo,monospace;overflow:auto}
+
+.wgkpi{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.wgkpi.tight{grid-template-columns:repeat(5,1fr)}
+.kpi{padding:10px;border-radius:12px;background:var(--sunken);border:1px solid var(--line)}
+.kpi b{display:block;font-size:17px;font-weight:600;letter-spacing:-.4px}
+.kpi small{display:block;font-size:12px;color:var(--muted);margin-top:2px}
+.wgplot{height:170px;margin-top:10px}
+.wgplot svg{width:100%;height:100%}
+.wgmore{display:flex;align-items:center;gap:6px;margin-top:10px;font-size:14px;color:var(--muted)}
+
+.wgdiff{display:flex;flex-direction:column;gap:2px}
+.dif{display:flex;align-items:center;gap:10px;padding:8px 4px;border-bottom:1px solid var(--line);font-size:15px}
+.dif:last-child{border-bottom:0}
+.dif .k{min-width:110px;color:var(--muted);font-size:13px}
+.dif .was{color:var(--muted);text-decoration:line-through;font-variant-numeric:tabular-nums}
+.dif .ico{width:14px;height:14px;color:var(--muted);transform:rotate(90deg)}
+.dif .now{font-weight:600;font-variant-numeric:tabular-nums}
+
+/* ---------- торговля ---------- */
+.wgstatus{border-color:var(--accent-edge);background:linear-gradient(180deg,var(--accent-soft),var(--card) 70%)}
+.live{font-size:12px;font-weight:700;letter-spacing:1px;padding:5px 9px;border-radius:7px;background:var(--lime);color:var(--on-lime)}
+.wgstatus b{font-size:15px;font-weight:600}
+.wgstatus small{display:block;font-size:13px;color:var(--muted)}
+.wgstatgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.wgstatgrid small{display:block;font-size:12px;color:var(--muted)}
+.wgstatgrid b{display:block;font-size:14px;font-weight:600;margin-top:2px}
+
+.wgplan{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}
+.pl{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:var(--sunken)}
+.pl:active{background:var(--hover)}
+.pl small{min-width:54px;font-size:12px;color:var(--muted)}
+.pl b{font-size:16px;font-weight:600;font-variant-numeric:tabular-nums}
+.pl span:last-child{margin-left:auto;font-size:13px}
+.pl.target{border-left:3px solid var(--up)}
+.pl.entry{border-left:3px solid var(--ink-accent)}
+.pl.stop{border-left:3px solid var(--down)}
+
+.riskrow{margin-bottom:10px}
+.riskrow small{font-size:13px;color:var(--muted)}
+.riskrow b{font-size:15px;font-weight:600}
+.riskrow .bar{margin-top:5px}
+.wgexp{display:flex;gap:4px;margin-top:4px}
+.exp{padding:7px 10px;border-radius:9px;font-size:12px;white-space:nowrap;overflow:hidden}
+.exp.long{background:color-mix(in srgb,var(--up) 16%,transparent);color:var(--up)}
+.exp.short{background:color-mix(in srgb,var(--down) 18%,transparent);color:var(--down)}
+
+/* ---------- журнал решений: вертикальная лента ---------- */
+.wgtl{display:flex;flex-direction:column;position:relative}
+.wgtl::before{content:'';position:absolute;left:10px;top:12px;bottom:12px;width:1px;background:var(--line)}
+.tlrow{display:flex;align-items:flex-start;gap:10px;width:100%;text-align:left;padding:9px 4px;position:relative}
+.tlrow:active{background:var(--hover);border-radius:10px}
+.tlrow .dot{width:9px;height:9px;border-radius:50%;background:var(--ink-accent);margin:5px 0 0 5px;flex-shrink:0;box-shadow:0 0 0 3px var(--card)}
+.tlrow .time{font-size:13px;color:var(--muted);min-width:44px;margin-top:2px;font-variant-numeric:tabular-nums}
+.tlrow b{display:block;font-size:15px;font-weight:600}
+.tlrow small{display:block;font-size:13px;color:var(--muted);margin-top:1px;line-height:1.4}
+.tlrow .ico{width:15px;height:15px;color:var(--muted);flex-shrink:0;margin-top:3px}
+
+/* ---------- работа бота ---------- */
+.taskrow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:8px 4px;border-bottom:1px solid var(--line)}
+.taskrow:last-child{border-bottom:0}
+.taskrow b{font-size:15px;font-weight:600}
+.taskrow small{display:block;font-size:12px;color:var(--muted)}
+.taskrow .bar{width:100%;margin-top:2px}
+.ricon{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;background:var(--sunken);border:1px solid var(--line);color:var(--ink-accent);flex-shrink:0}
+.ricon .ico{width:15px;height:15px}
+
+.wgalert{border-color:var(--rec-line);background:var(--rec-bg)}
+.wgalert b{font-size:15px;font-weight:600}
+.wgalert small{display:block;font-size:13px;color:var(--rec-ink);opacity:.9;margin-top:2px}
+.alerticon{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;background:var(--surface);color:var(--rec-line);flex-shrink:0}
+.wgalert .promobtn{margin-top:10px;width:100%}
+
+.wgconn{display:flex;gap:7px;margin-bottom:10px;font-size:12px;color:var(--muted)}
+.wgconn span{display:inline-flex;align-items:center;gap:5px;padding:4px 9px;border-radius:999px;border:1px solid var(--line);background:var(--card)}
+.wgconn span::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--up)}
+.wgconn .bad{color:var(--red);border-color:var(--rec-line)}
+.wgconn .bad::before{background:var(--red)}
+
+/* ---------- скальпинг ---------- */
+.dom{display:flex;flex-direction:column;font-size:13px;font-variant-numeric:tabular-nums}
+.domrow{display:flex;align-items:center;gap:8px;padding:3px 6px;position:relative}
+.domrow .vol{position:absolute;inset:0;display:block}
+.domrow .vol i{display:block;height:100%;opacity:.16}
+.domrow.ask .vol i{background:var(--down);margin-left:auto}
+.domrow.bid .vol i{background:var(--up);margin-left:auto}
+.domrow .p{position:relative;flex:1}
+.domrow.ask .p{color:var(--down)}
+.domrow.bid .p{color:var(--up)}
+.domrow .sz{position:relative;color:var(--muted)}
+.domspread{text-align:center;font-size:12px;color:var(--muted);padding:6px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:3px 0}
+
+/* график каталога подсвечивается, когда на него ведёт тап по сущности */
+.wgflash{animation:wgflash .9s ease-out}
+@keyframes wgflash{0%{box-shadow:0 0 0 0 var(--accent-edge)}35%{box-shadow:0 0 0 4px var(--accent-edge)}100%{box-shadow:0 0 0 0 transparent}}
+@media(prefers-reduced-motion:reduce){.wgflash{animation:none}}
+
+@media(max-width:420px){
+ .wgkpi{grid-template-columns:repeat(2,1fr)}
+ .wgkpi.tight{grid-template-columns:repeat(3,1fr)}
+ .wgacc{grid-template-columns:repeat(2,1fr)}
+ .wgstatgrid{grid-template-columns:1fr}
+ .snapgrid{justify-content:flex-start}
+}
+/* точка важности не растягивается по колонке */
+.wgtable .tr .dotimp,.wgtable .th .dotimp,.wgrow .dotimp{flex:0 0 7px}
+.wgtable .tr .dir,.wgtable .th .dir{flex:0 0 auto}
+.wgspread{justify-content:flex-start}
+
+/* ============================================================
+   ВТОРАЯ РЕДАКЦИЯ: разные классы UI должны выглядеть по-разному.
+   Ниже — формы, которых не было: тикер, лестница цен, плотные
+   строки сделок и позиций, вертикальный календарь, полоса статуса.
+   ============================================================ */
+
+/* тикерная строка вместо карточки снимка рынка */
+.ticker{padding:8px 12px;border-radius:12px;border:1px solid var(--line);background:var(--card);margin-bottom:10px}
+.ticker .t1{display:flex;align-items:baseline;gap:10px}
+.ticker .sym{font-size:14px;font-weight:600;color:var(--muted)}
+.ticker .px{font-size:22px;font-weight:600;letter-spacing:-.6px;font-variant-numeric:tabular-nums}
+.ticker .t1 span{font-size:14px;margin-left:auto}
+.ticker .t2{display:flex;gap:14px;margin-top:2px;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+@media(max-width:380px){.ticker .t2 .opt{display:none}}
+
+/* сигналы: три строки смысла в одной строке списка */
+.sigrow{display:flex;align-items:flex-start;gap:10px;width:100%;text-align:left;padding:10px 6px;border-bottom:1px solid var(--line)}
+.sigrow:last-child{border-bottom:0}
+.sigrow:active{background:var(--hover);border-radius:10px}
+.sigrow b{display:block;font-size:15px;font-weight:600}
+.sigrow .line{display:block;font-size:14px;margin-top:1px}
+.sigrow small{display:block;font-size:12px;color:var(--muted);margin-top:2px}
+.sigrow small .on{color:var(--ink-accent)}
+.sigrow small .off{opacity:.6}
+.sigrow .ico,.wgfile .ico:last-child,.tlrow .ico{transform:rotate(90deg)}
+.sigrow .ico{width:15px;height:15px;color:var(--muted);flex-shrink:0;margin-top:4px}
+
+/* новости: источник и время — основное вторичное поле */
+.newsrow2{display:flex;align-items:flex-start;gap:10px;padding:9px 6px;border-bottom:1px solid var(--line)}
+.newsrow2:last-child{border-bottom:0}
+.newsrow2 b{display:block;font-size:15px;font-weight:500;line-height:1.35}
+.newsrow2 small{display:block;font-size:12px;color:var(--muted);margin-top:3px}
+.imp{flex-shrink:0;font-size:12px;color:var(--rec-ink);background:var(--rec-bg);border:1px solid var(--rec-line);padding:2px 7px;border-radius:999px;white-space:nowrap}
+
+/* календарь: время слева, событие главное, цифры второй строкой */
+.calrow{display:flex;align-items:flex-start;gap:10px;padding:9px 6px;border-bottom:1px solid var(--line)}
+.calrow:last-child{border-bottom:0}
+.calrow .time{font-size:13px;color:var(--muted);min-width:44px;font-variant-numeric:tabular-nums;margin-top:1px}
+.calrow b{display:block;font-size:15px;font-weight:600}
+.calrow small{display:block;font-size:12px;color:var(--muted);margin-top:2px;font-variant-numeric:tabular-nums}
+.calrow small .fact{display:inline;color:var(--text);font-weight:600}
+.impflag{flex-shrink:0;font-size:12px;font-weight:700;letter-spacing:.5px;padding:3px 7px;border-radius:6px;color:var(--muted);background:var(--sunken);border:1px solid var(--line)}
+.impflag.hi{color:var(--rec-ink);background:var(--rec-bg);border-color:var(--rec-line)}
+.impflag.mid{color:var(--accent-ink);background:var(--accent-soft);border-color:var(--accent-edge)}
+
+/* стратегия: имя, версия, статус */
+.wgstrat .wghead .ver{font-size:13px;color:var(--muted)}
+.badge{margin-left:auto;font-size:12px;font-weight:700;letter-spacing:.6px;padding:3px 8px;border-radius:6px}
+.badge.tested{background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--accent-edge)}
+.badge.draft{background:var(--sunken);color:var(--muted);border:1px solid var(--line)}
+.badge.live{background:var(--lime);color:var(--on-lime)}
+
+/* KPI с иерархией: два главных крупно, остальные строкой */
+.kpimain{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.kpimain>div{padding:12px;border-radius:12px;background:var(--sunken);border:1px solid var(--line)}
+.kpimain small{display:block;font-size:12px;color:var(--muted)}
+.kpimain b{display:block;font-size:26px;line-height:1.15;font-weight:600;letter-spacing:-.8px;margin-top:2px}
+.kpisub{display:flex;gap:16px;flex-wrap:wrap;margin-top:10px;padding-top:10px;border-top:1px solid var(--line)}
+.kpisub span{display:flex;align-items:baseline;gap:6px}
+.kpisub small{font-size:12px;color:var(--muted)}
+.kpisub b{font-size:15px;font-weight:600;font-variant-numeric:tabular-nums}
+
+/* сделки бэктеста: плотные строки с датой и ценами */
+.traderow{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:9px 6px;border-bottom:1px solid var(--line)}
+.traderow:last-child{border-bottom:0}
+.traderow:active{background:var(--hover);border-radius:10px}
+.traderow b{display:block;font-size:15px;font-weight:600;font-variant-numeric:tabular-nums}
+.traderow small{display:block;font-size:12px;color:var(--muted);margin-top:1px;font-variant-numeric:tabular-nums}
+.traderow .plv{font-size:15px;font-weight:600;font-variant-numeric:tabular-nums;flex-shrink:0;white-space:nowrap}
+.traderow .grow{min-width:0}
+.traderow small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* план сделки: лестница цен */
+.ladder{display:flex;flex-direction:column;align-items:stretch}
+.ladstep{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:var(--sunken)}
+.ladstep:active{background:var(--hover)}
+.ladstep .lab{font-size:12px;font-weight:700;letter-spacing:.6px;color:var(--muted);min-width:56px}
+.ladstep b{font-size:16px;font-weight:600;font-variant-numeric:tabular-nums}
+.ladstep .rt{margin-left:auto;font-size:13px;color:var(--muted)}
+.ladstep.target{border-color:color-mix(in srgb,var(--up) 45%,var(--line))}
+.ladstep.entry{border-color:var(--accent-edge);background:var(--accent-soft)}
+.ladstep.stop{border-color:color-mix(in srgb,var(--down) 45%,var(--line))}
+.rung{display:block;width:2px;height:14px;margin-left:24px;background:var(--line-strong)}
+.planfoot{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;padding-top:9px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+
+/* позиции: каждая самодостаточна */
+.posrow{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:10px 6px;border-bottom:1px solid var(--line)}
+.posrow:last-child{border-bottom:0}
+.posrow:active{background:var(--hover);border-radius:10px}
+.posrow .l1{display:flex;align-items:center;gap:7px}
+.posrow .l1 b{font-size:15px;font-weight:600}
+.posrow .sz{font-size:13px;color:var(--muted)}
+.posrow small{display:block;font-size:12px;color:var(--muted);margin-top:2px;font-variant-numeric:tabular-nums}
+.posrow .lvls{opacity:.85}
+.plbox{text-align:right;flex-shrink:0}
+.plbox b{display:block;font-size:15px;font-weight:600;font-variant-numeric:tabular-nums}
+.plbox small{display:block;font-size:12px;opacity:.8}
+.plbox.up b,.plbox.up small{color:var(--up)}
+.plbox.down b,.plbox.down small{color:var(--down)}
+
+/* счёт: чей он */
+.acchead{display:flex;align-items:center;gap:8px;margin-bottom:10px;font-size:13px;color:var(--muted)}
+.acchead b{font-size:13px;font-weight:600;color:var(--text)}
+.acchead .ico{width:15px;height:15px}
+
+/* риск: значение против лимита */
+.riskrow .lim{font-weight:400;color:var(--muted);font-size:13px}
+
+/* период в шапке результатов */
+.seg{display:flex;gap:2px;margin-left:auto;padding:2px;border-radius:9px;background:var(--sunken);border:1px solid var(--line)}
+.seg button{padding:4px 9px;border-radius:7px;font-size:12px;color:var(--muted);min-height:0}
+.seg button.on{background:var(--accent-soft);color:var(--ink-accent)}
+
+/* задачи без выдуманного прогресса */
+.taskrow.ind{align-items:center}
+.taskrow.ind small{color:var(--ink-accent)}
+
+/* полоса состояния: тонкая, пока всё цело */
+.wgconn{gap:6px;margin-bottom:12px;font-size:12px}
+.wgconn span{padding:3px 8px;background:transparent;border-color:transparent}
+.wgconn .bad{background:var(--rec-bg);border-color:var(--rec-line)}
+.wgconn .bad b{font-weight:700;letter-spacing:.5px}
+
+/* шапка стакана: спред, глубина и ликвидность живут здесь */
+.domhead{display:flex;gap:14px;flex-wrap:wrap;padding:8px 6px;margin-bottom:6px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-size:12px;color:var(--muted)}
+.domhead b{font-weight:600;color:var(--text);font-variant-numeric:tabular-nums}
+
+/* на широком экране мелкие сводки встают парами */
+@media(min-width:760px){
+ .wgpair{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:start}
+ .wgpair>*{margin-bottom:0}
+}
+@media(max-width:420px){.kpimain b{font-size:22px}}
+
+/* заявки: плотные строки, пунктирная кромка — это ещё не позиция */
+.ordrow{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:10px 6px 10px 10px;border-bottom:1px solid var(--line);border-left:2px dashed var(--line-strong);border-radius:0 10px 10px 0}
+.ordrow:last-child{border-bottom:0}
+.ordrow:active{background:var(--hover)}
+.ordrow .l1{display:flex;align-items:center;gap:7px}
+.ordrow .l1 b{font-size:15px;font-weight:600}
+.ordrow small{display:block;font-size:12px;color:var(--muted);margin-top:2px;font-variant-numeric:tabular-nums}
+.ordrow .ost{opacity:.85}
+.ordrow .ico{width:15px;height:15px;color:var(--muted);flex-shrink:0;transform:rotate(90deg)}
+.otype{font-size:12px;font-weight:700;letter-spacing:.4px;padding:3px 7px;border-radius:6px;white-space:nowrap}
+.otype.long{background:color-mix(in srgb,var(--up) 14%,transparent);color:var(--up)}
+.otype.short{background:color-mix(in srgb,var(--down) 16%,transparent);color:var(--down)}
+
+/* последние сделки: плотная строка, результат справа */
+.rtrow{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:9px 6px;border-bottom:1px solid var(--line)}
+.rtrow:last-child{border-bottom:0}
+.rtrow:active{background:var(--hover);border-radius:10px}
+.rtrow .l1{display:flex;align-items:center;gap:7px}
+.rtrow .l1 b{font-size:15px;font-weight:600}
+.rtrow small{display:block;font-size:12px;color:var(--muted);margin-top:2px}
+.rtrow .plv{font-size:15px;font-weight:600;font-variant-numeric:tabular-nums;flex-shrink:0}
+@media(min-width:760px){
+ .rtrow small{display:inline-block;margin:0 0 0 10px}
+ .rtrow .l1{display:inline-flex}
+}
