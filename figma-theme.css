@@ -463,3 +463,17 @@ dialog>*>p,dialog p.lead{font-size:15px;line-height:22px}
 .main .dock{transition:height .42s cubic-bezier(.32,.72,0,1)}
 .main .dock.dragging{transition:none}
 .dock .daypill,.chatmain .daypill{position:static}
+
+/* шапка шторки: аватар 40, название 20, обмен слоями 36 — как в макете */
+.dock .docktitle{gap:12px;padding:26px 20px 12px;touch-action:none;cursor:grab}
+.dock .docktitle .avatar{width:40px;height:40px;flex-basis:40px}
+.dock .docktitle b,.dock .docktitle b.chat{font-size:20px;line-height:28px;font-weight:600}
+.dock .docktitle .swapbtn{width:36px;height:36px;min-height:36px;flex:0 0 36px;color:var(--ink-accent);background:var(--card);border-radius:50%}
+.dock .docktitle .swapbtn .ico{width:20px;height:20px;stroke-width:2}
+
+/* область для перетаскивания шире самой полоски: на всю ширину шторки и выше/ниже неё */
+.dock .sheethandle{left:0;transform:none;width:100%;height:44px;min-height:44px;padding-top:8px}
+.chatbar .composer .dockhandle{left:0;transform:none;width:100%;height:20px;min-height:20px;border-radius:999px 999px 0 0;padding-top:6px}
+.chatbar .composer .dockhandle::before{content:"";position:absolute;left:0;right:0;top:-16px;height:16px}
+.dock .docktitle{margin-top:14px}
+.dock .docktitle{margin-top:0;padding-top:24px}
