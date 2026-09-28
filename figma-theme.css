@@ -568,3 +568,13 @@ dialog>*>p,dialog p.lead{font-size:15px;line-height:22px}
 /* шторка села на таблетку жестом: сжатие начинается, когда она почти доехала */
 .chatbar .composer.catch{animation:pillblink .72s cubic-bezier(.37,0,.63,1) .25s both}
 @media(prefers-reduced-motion:reduce){.chatbar .composer.blink,.chatbar .composer.catch{animation:none}}
+
+/* кнопка обмена слоёв — того же цвета, что остальные иконки (#404040 / #e5e5e7 в тёмной теме), без розового */
+.topbar .swapbtn,.docktitle .swapbtn,.dock .docktitle .swapbtn{color:#404040}
+:root:not([data-theme="light"]) .topbar .swapbtn,:root:not([data-theme="light"]) .docktitle .swapbtn,:root:not([data-theme="light"]) .dock .docktitle .swapbtn{color:#e5e5e7}
+
+/* баннер «Подключите счёт»: крестик — в правом верхнем углу, а не в ряду; так тексту и кнопке хватает места */
+.promo{position:relative;padding-right:16px}
+.promo .promoclose{position:absolute;top:6px;right:6px;width:28px;height:28px;min-height:28px;flex:none;background:none;color:var(--muted)}
+.promo .promoclose .ico{width:14px;height:14px}
+.promo .promobtn{margin-top:0;width:auto}
