@@ -477,3 +477,94 @@ dialog>*>p,dialog p.lead{font-size:15px;line-height:22px}
 .chatbar .composer .dockhandle::before{content:"";position:absolute;left:0;right:0;top:-16px;height:16px}
 .dock .docktitle{margin-top:14px}
 .dock .docktitle{margin-top:0;padding-top:24px}
+
+/* ============================================================
+   ОБМЕН СЛОЁВ — по гифке: старый нижний слой сначала сжимается
+   (масштаб ≈ 0.915, углы 32), затем едет вниз, в шторку: верхний край
+   опускается до таблетки, нижний остаётся на месте. Под ним уже лежит
+   новый нижний слой. Замеры сделаны по кадрам гифки: сжатие ≈ 320 мс,
+   уезд ≈ 420 мс.
+   Имена нужны только на время перехода: у старого слоя — layer-out,
+   у нового — layer-in, поэтому браузер не «морфит» их друг в друга.
+   ============================================================ */
+.vt-old .overview,.vt-old .chatmain{view-transition-name:layer-out}
+.vt-new .overview,.vt-new .chatmain{view-transition-name:layer-in}
+.vt-old .dock,.vt-new .dock{view-transition-name:layer-sheet}
+.vt-old .chatbar,.vt-new .chatbar{view-transition-name:layer-pill}
+.vt-old .topbar,.vt-new .topbar{view-transition-name:layer-topbar}
+
+::view-transition-group(layer-out){animation:none;z-index:5;clip-path:inset(0 0 45px 0)}
+::view-transition-old(layer-out){animation:layer-fold .86s linear both;transform-origin:50% 50%;mix-blend-mode:normal}
+::view-transition-new(layer-out){display:none}
+/* по гифке: сжатие 0–340 мс, пауза до 500 мс, падение верхнего края на таблетку 500–860 мс */
+@keyframes layer-fold{
+ 0%{transform:none;border-radius:0;animation-timing-function:cubic-bezier(.3,.1,.2,1)}
+ 40%{transform:translateY(-7px) scale(.915);border-radius:32px}
+ 58%{transform:translateY(-7px) scale(.915);border-radius:32px;animation-timing-function:cubic-bezier(.25,.1,.1,1)}
+ 100%{transform:translateY(721px) scale(.915);border-radius:32px}
+}
+/* ручка карточки: появляется, когда карточка сжалась, едет вниз вместе с верхним краем и растворяется у таблетки */
+.foldhandle{position:absolute;top:49px;left:calc(50% - 20px);width:40px;height:3px;border-radius:32px;background:#bcbcbc;pointer-events:none}
+.vt-old .foldhandle{view-transition-name:layer-foldhandle}
+::view-transition-group(layer-foldhandle){z-index:7;animation:foldh-move .86s linear both}
+::view-transition-old(layer-foldhandle){animation:foldh-fade .86s linear both;mix-blend-mode:normal}
+::view-transition-new(layer-foldhandle){display:none}
+@keyframes foldh-move{0%,58%{translate:0 0;animation-timing-function:cubic-bezier(.25,.1,.1,1)}100%{translate:0 699px}}
+@keyframes foldh-fade{0%,26%{opacity:0}40%,94%{opacity:1}100%{opacity:0}}
+/* ручка таблетки прячется на время сжатия и возвращается, когда карточка начинает падать */
+.vt-new .pillhandle{animation:pillh .86s linear both}
+@keyframes pillh{0%,4%{opacity:1}10%,57%{opacity:0}62%,100%{opacity:1}}
+::view-transition-group(layer-in){animation:none;z-index:1}
+::view-transition-old(layer-in){display:none}
+::view-transition-new(layer-in){animation:none;mix-blend-mode:normal}
+::view-transition-group(layer-sheet){z-index:6;animation-duration:.25s}
+::view-transition-group(layer-pill),::view-transition-group(layer-topbar){z-index:9;animation:none}
+::view-transition-old(root),::view-transition-new(root){animation:none}
+@media(prefers-reduced-motion:reduce){::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}}
+
+/* шапка и таблетка во время обмена стоят на месте: показываем только новое состояние, без наложения старого */
+::view-transition-old(layer-topbar),::view-transition-old(layer-pill){display:none}
+::view-transition-new(layer-topbar),::view-transition-new(layer-pill){animation:none;mix-blend-mode:normal}
+::view-transition-old(layer-sheet){mix-blend-mode:normal}
+::view-transition-new(layer-sheet){mix-blend-mode:normal}
+
+/* нижний слой — непрозрачная «карточка»: при обмене она уезжает целиком, а не просвечивает */
+.overview,.chatmain{background:var(--page)}
+
+/* ============================================================
+   ШТОРКА СВОРАЧИВАЕТСЯ В ИНПУТ
+   Раньше при закрытии шторка исчезала сразу (visibility срабатывала мгновенно).
+   Теперь верхний край опускается к таблетке, содержимое гаснет и чуть съезжает
+   вниз, ручка возвращается на таблетку, а сама таблетка получает лёгкий толчок.
+   ============================================================ */
+.main .dock.collapsed,.main .dock.swapped.collapsed{
+ transition:height .42s cubic-bezier(.32,.72,0,1),box-shadow .42s,visibility 0s .42s;
+}
+.main .dock>*{transition:opacity .22s .1s,transform .42s cubic-bezier(.32,.72,0,1)}
+.main .dock.collapsed>*{opacity:0;transform:translateY(28px);transition:opacity .2s,transform .42s cubic-bezier(.32,.72,0,1)}
+.main .dock.dragging>*{transition:none}
+.main .dock .sheethandle{transition:opacity .15s}
+.main .dock.collapsed .sheethandle{opacity:0}
+.chatbar .pillhandle{transition:opacity .2s .28s}
+.main .dock:not(.collapsed)~.chatbar .pillhandle{transition:opacity .12s}
+@keyframes pillcatch{0%{transform:scale(1)}40%{transform:scale(1.025) translateY(2px)}100%{transform:scale(1)}}
+.chatbar .composer.catch{animation:pillcatch .34s cubic-bezier(.3,.7,.3,1) .3s}
+@media(prefers-reduced-motion:reduce){.chatbar .composer.catch{animation:none}.main .dock,.main .dock>*{transition:none!important}}
+
+
+/* закрытие шторки по гифке: ручка едет вниз вместе с верхним краем шторки, ручка таблетки видна сразу, таблетка не пружинит */
+.main .dock.collapsed .sheethandle{opacity:1}
+.chatbar .pillhandle{transition:opacity .12s}
+
+/* Таблетка «моргает», когда в неё заехал слой. Замеры по гифке (иконки и текст съезжают к центру, масштаб ≈ 0.963):
+   сжатие 240 мс → пауза 240 мс в сжатом виде → возврат 240 мс к обычному размеру. Всего 720 мс, движение ровное. */
+@keyframes pillblink{
+ 0%{transform:scale(1)}
+ 33.3%{transform:scale(.963)}
+ 66.6%{transform:scale(.963)}
+ 100%{transform:scale(1)}
+}
+.chatbar .composer.blink{animation:pillblink .72s cubic-bezier(.37,0,.63,1) both}
+/* шторка села на таблетку жестом: сжатие начинается, когда она почти доехала */
+.chatbar .composer.catch{animation:pillblink .72s cubic-bezier(.37,0,.63,1) .25s both}
+@media(prefers-reduced-motion:reduce){.chatbar .composer.blink,.chatbar .composer.catch{animation:none}}
