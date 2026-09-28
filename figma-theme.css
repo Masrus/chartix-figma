@@ -1,0 +1,431 @@
+/* ============================================================
+   FIGMA-ТЕМА. Подключается ПОСЛЕ style.css и widgets.css.
+   Источник: файл 🧠, фрейм «Frame 2147237654» (список ботов + чат GoldBot).
+   Там есть: белый холст, серые плитки #f7f7f7 с радиусом 20, круглые
+   стеклянные кнопки, цветные аватарки ботов, шторка со скруглением 32.
+   Всё, чего в макете нет (диалоги, таблицы, вкладки, формы, график),
+   собрано из тех же токенов — ничего нового не изобретено.
+   ============================================================ */
+
+:root,:root[data-theme="light"]{
+ --font:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display",Inter,"Segoe UI",Roboto,sans-serif;
+
+ /* форма */
+ --r-tile:20px;      /* плитки и карточки: radius/xxl из макета */
+ --r-sheet:32px;     /* шторка и экран */
+ --r-ctl:14px;       /* поля и строки таблиц */
+
+ /* бренд: градиент аватарки GoldBot */
+ --brand-a:#d01e8a;
+ --brand-b:#ba30ff;
+ --brand:linear-gradient(135deg,var(--brand-a),var(--brand-b));
+
+ /* поверхности (светлая тема) */
+ --page:#ffffff;
+ --bg:#ffffff;
+ --surface:#ffffff;
+ --card:#f7f7f7;         /* buttonbackground/secondary/normal */
+ --sunken:#ffffff;       /* вложенное в плитку — белое */
+ --sidebar:#ffffff;
+ --dock:#ffffff;
+ --sheetbg:#ffffff;   /* --dock занят высотой шторки, поэтому цвет — отдельным токеном */
+ --raised:#efeff0;
+ --hover:rgba(0,0,0,.05);
+ --control:#f7f7f7;
+ --control-line:transparent;
+ --line:#eeeef0;
+ --line-strong:#e2e2e5;
+ --track:#e9e9ec;
+ --handle:#bcbcbc;       /* indicator-bar из макета */
+ --handle-on:#a4a4a8;
+ --dot:#e0e0e4;
+ --scrim:rgba(0,0,0,.32);
+ --shadow-soft:rgba(0,0,0,.05);
+ --shadow-deep:rgba(0,0,0,.16);
+
+ --text:#000000;         /* foreground/primary/normal */
+ --muted:#8a8a8e;        /* foreground/secondary/normal */
+
+ /* акцент: главная кнопка — чёрная, бренд живёт в аватарках и кнопке отправки */
+ --lime:#000000;
+ --on-lime:#ffffff;
+ --ink-accent:#c01d84;
+ --accent-soft:#f7f7f7;
+ --accent-edge:#e9e9ec;
+ --accent-ink:#404040;
+ --on-fill:#ffffff;
+ --green:#009345;
+ --red:#e0451a;
+
+ --bubble-in:#f7f7f7;
+ --bubble-out:#000000;
+ --bubble-out-ink:#ffffff;
+ --bubble-out-time:rgba(255,255,255,.62);
+
+ --term-bg:#151517;
+ --term-ink:#d7d7da;
+
+ --av-bg:#f7f7f7;
+ --av-gold-bg:#f7f7f7;  --av-gold-ink:#404040;
+ --av-risk-bg:#f7f7f7;  --av-risk-ink:#404040;
+ --av-info-bg:#f7f7f7;  --av-info-ink:#404040;
+ --rec-bg:#fdecec;      --rec-line:#e0451a;  --rec-ink:#c23412;
+
+ /* график: цвета свечей из макета */
+ --grid:#ececee;
+ --axis:#d6d6da;
+ --axis-ink:#8a8a8e;
+ --up:#009345;
+ --down:#f05824;
+ --draw:#c01d84;
+ --draw-chip:#fbeaf5;
+
+ /* «стекло» из макета: серая подложка #f7f7f7 с блюром */
+ --glass:rgba(247,247,247,.82);
+ --glass-soft:rgba(247,247,247,.7);
+ --edge:transparent;
+ --sheen:none;
+ --lift:0 2px 14px rgba(0,0,0,.06);
+ --in:#f7f7f7;
+ --wall-1:transparent;--wall-2:transparent;--wall-3:transparent;
+ --chat-wall-1:transparent;--chat-wall-2:transparent;
+ color-scheme:light;
+}
+
+:root:not([data-theme="light"]){
+ color-scheme:dark;
+ --page:#000000;
+ --bg:#000000;
+ --surface:#1c1c1e;
+ --card:#1c1c1e;
+ --sunken:#2c2c2e;
+ --sidebar:#000000;
+ --dock:#1c1c1e;
+ --sheetbg:#1c1c1e;
+ --raised:#2c2c2e;
+ --hover:rgba(255,255,255,.08);
+ --control:#2c2c2e;
+ --line:#2a2a2d;
+ --line-strong:#3a3a3d;
+ --track:#3a3a3d;
+ --handle:#5a5a5e;
+ --handle-on:#8a8a8e;
+ --dot:#3a3a3d;
+ --scrim:rgba(0,0,0,.6);
+ --shadow-soft:rgba(0,0,0,.3);
+ --text:#ffffff;
+ --muted:#8e8e93;
+ --lime:#ffffff;
+ --on-lime:#000000;
+ --ink-accent:#ff5cc0;
+ --accent-soft:#1c1c1e;
+ --accent-edge:#3a3a3d;
+ --accent-ink:#d9d9dc;
+ --on-fill:#000000;
+ --green:#30d158;
+ --red:#ff7a52;
+ --bubble-in:#1c1c1e;
+ --bubble-out:#ffffff;
+ --bubble-out-ink:#000000;
+ --bubble-out-time:rgba(0,0,0,.5);
+ --av-bg:#1c1c1e;--av-gold-bg:#1c1c1e;--av-risk-bg:#1c1c1e;--av-info-bg:#1c1c1e;
+ --av-gold-ink:#d9d9dc;--av-risk-ink:#d9d9dc;--av-info-ink:#d9d9dc;
+ --rec-bg:#3a1d17;--rec-line:#ff7a52;--rec-ink:#ffab91;
+ --grid:#242427;
+ --axis:#3a3a3d;
+ --axis-ink:#8e8e93;
+ --up:#30d158;
+ --down:#ff6a3d;
+ --draw:#ff5cc0;
+ --draw-chip:#3a1f31;
+ --glass:rgba(44,44,46,.82);
+ --glass-soft:rgba(44,44,46,.7);
+ --lift:0 2px 14px rgba(0,0,0,.4);
+ --in:#1c1c1e;
+}
+
+html,body{background:var(--page);font-family:var(--font);-webkit-font-smoothing:antialiased}
+body{letter-spacing:0}
+
+/* ---------- гасим «жидкое стекло» прошлой версии ---------- */
+.sidebar,.topbar,.dock,.chartcard,.stat,.hero,.runpanel,.notice,.bubble,dialog,
+.capsule,.searchbox,.inputbox,.chip,.quickactions button,.tagbtn,.tag,.ctl,.thinrow,.pickrow{
+ -webkit-backdrop-filter:none;backdrop-filter:none;
+}
+.capsule,.sidehead .searchbox{
+ background:var(--card);border:0;box-shadow:0 2px 12px rgba(0,0,0,.05);
+ -webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);
+}
+:root:not([data-theme="light"]) .capsule,:root:not([data-theme="light"]) .sidehead .searchbox{background:var(--raised);box-shadow:none}
+.sidehead .searchbox:hover,.sidehead.searching .searchbox:hover{background:var(--raised);box-shadow:none}
+.iconbtn{color:#404040}
+:root:not([data-theme="light"]) .iconbtn{color:#e5e5e7}
+.searchtoggle{color:#404040}
+:root:not([data-theme="light"]) .searchtoggle{color:#e5e5e7}
+
+/* ---------- список ботов ---------- */
+.sidebar{background:var(--sidebar);border-right:0}
+.sidehead{padding:calc(env(safe-area-inset-top,0px) + 16px) 24px 10px;min-height:0;gap:12px}
+.sidehead .brand{padding:0;margin:0;border-radius:50%;width:43px;height:43px;min-height:43px;flex:0 0 43px;max-width:43px}
+.sidehead .brand:hover{background:none}
+.sidehead .brand img{width:43px;height:43px;border-radius:50%;object-fit:cover;display:block}
+.sidehead.searching .brand{max-width:0;flex-basis:0;margin-left:-12px}
+.sidehead .searchbox,.sidehead .addbtn{height:44px;border-radius:999px}
+.addbtn{color:#404040;border:0;background:var(--card);width:44px;height:44px;min-width:44px;box-shadow:0 2px 12px rgba(0,0,0,.05)}
+:root:not([data-theme="light"]) .addbtn{background:var(--raised);color:#e5e5e7;box-shadow:none}
+.addbtn:hover{background:var(--raised)}
+.addbtn .ico{stroke-width:2}
+
+.sidebody{padding:0 24px calc(16px + env(safe-area-inset-bottom))}
+.stories{display:flex;gap:0;justify-content:flex-start;margin:14px -8px 26px;padding:6px 0;overflow-x:auto;scrollbar-width:none}
+.stories::-webkit-scrollbar{display:none}
+.story{position:relative;flex:0 0 56px;width:56px;height:56px;margin:0 8px;border-radius:50%;display:block;transition:transform .16s}
+.story:active{transform:scale(.94)}
+.story img{position:absolute;inset:-4px;width:64px;height:64px;max-width:none;display:block}
+.story .livedot{left:auto;right:0;top:auto;bottom:0}
+
+.chatrow{padding:0;height:56px;margin:0 0 24px;gap:16px;border-radius:0;background:none!important;box-shadow:none!important;align-items:center}
+.chatrow:hover{background:none}
+.chatrow b{font-size:16px;font-weight:500;line-height:20px;color:var(--text)}
+.chatrow p{font-size:14px;line-height:18px;margin-top:4px;color:var(--muted)}
+.chatrow time{font-size:12px;line-height:16px;color:var(--muted)}
+.chatrow .grow{min-width:0}
+.chatrow:active .avatar{transform:scale(.94)}
+.chatrow .working,.working{color:var(--ink-accent)}
+.livedot{background:var(--green);border:2px solid var(--page);width:12px;height:12px;left:34px;top:34px}
+.emptylist{color:var(--muted);text-align:center;padding:40px 12px;font-size:14px}
+
+/* ---------- аватарки ---------- */
+.avatar{width:48px;height:48px;border-radius:0;background:none!important;display:block;position:relative;overflow:visible;flex:0 0 48px;transition:transform .16s}
+.avatar img{width:100%;height:100%;display:block;max-width:none}
+.avatar.big{width:64px;height:64px;flex-basis:64px;border-radius:0}
+.avatar.mach{display:grid;place-items:center;border-radius:14px;background:var(--card)!important;color:#404040}
+.avatar.mach .ico{width:22px;height:22px}
+.capsule .avatar{width:36px;height:36px;flex-basis:36px;border-radius:0}
+
+/* ---------- шапка чата ---------- */
+.topbar{left:20px;right:20px;top:calc(env(safe-area-inset-top,0px) + 14px);gap:8px}
+.topbar .capsule.title{background:none;box-shadow:none;border:0;backdrop-filter:none;-webkit-backdrop-filter:none;order:0;margin:0 auto 0 0;padding:0;flex:1 1 auto;max-width:none;flex-direction:row;justify-content:flex-start;align-items:center;gap:12px;height:48px;min-width:0;pointer-events:none}
+.topbar .capsule.title .avatar{width:48px;height:48px;flex-basis:48px}
+.topbar .capsule.title .ttext{min-width:0}
+.topbar .capsule.title h2{font-size:24px;line-height:32px;font-weight:600;letter-spacing:-.2px}
+.topbar .capsule.title p{font-size:13px;line-height:14px;margin-top:0}
+.topbar .capsule.actions{order:1}
+.topbar .capsule.lead{order:2}
+.topbar .capsule.mode{order:0}
+.topbar .capsule{height:44px;padding:0}
+.topbar .capsule .iconbtn{width:44px;height:44px}
+.overview,.computer{padding-top:calc(env(safe-area-inset-top,0px) + 82px)}
+
+/* ---------- плитки: карточки, виджеты, графики ---------- */
+.chartcard,.wg,.stat,.hero,.runpanel,.notice,.accstrip,.riskitem,.msgcard,.wgintro,.thinrow,.pickrow,.card{
+ background:var(--card);border:0;border-radius:var(--r-tile);box-shadow:none;
+}
+.chartcard,.chartcard.second,.charts.two .chartcard.second{background:var(--card);border-radius:24px;overflow:hidden}
+.wg{padding:16px;margin-bottom:12px}
+.wghead b{font-size:15px;font-weight:600}
+.wgnote{color:var(--muted)}
+.wgsec{font-size:13px;letter-spacing:0;text-transform:none;font-weight:600;color:var(--text);margin:26px 0 10px}
+.wgintro{padding:16px}
+.wgintro b{font-size:17px}
+.snapmain b{font-size:32px;font-weight:600;letter-spacing:-.6px}
+.snapcell,.accell,.stat .stat,.summarygrid .stat{background:var(--sunken);border:0;border-radius:14px}
+.stat{padding:14px 16px}
+.stat b{font-size:22px;font-weight:600;line-height:1.2;letter-spacing:-.3px}
+.stat small,.snapcell small,.accell small{color:var(--muted)}
+.wgrow{border-bottom:1px solid var(--line);padding:11px 4px;border-radius:0}
+button.wgrow:active{background:var(--hover)}
+.notice{padding:14px 16px}
+.notice.warn,.notice.err,.notice.bad{background:var(--rec-bg)}
+
+/* ---------- кнопки ---------- */
+.primary,.notice .primary,button.primary{background:var(--lime);color:var(--on-lime);border-radius:999px;border:0;box-shadow:none;font-weight:600;min-height:48px}
+.primary:active{transform:scale(.98)}
+.secondary,.ghost,.tagbtn{background:var(--card);color:var(--text);border:0;border-radius:999px;font-weight:500}
+:root:not([data-theme="light"]) .secondary,:root:not([data-theme="light"]) .ghost,:root:not([data-theme="light"]) .tagbtn{background:var(--raised)}
+.tagbtn:hover,.secondary:hover{background:var(--raised)}
+.tag{background:var(--sunken);border:0;color:var(--muted);border-radius:999px}
+.chip,.quickactions button,.ctl{background:var(--card);border:0;color:var(--text);border-radius:999px}
+:root:not([data-theme="light"]) .chip,:root:not([data-theme="light"]) .quickactions button,:root:not([data-theme="light"]) .ctl{background:var(--raised)}
+.chip:hover,.quickactions button:hover,.ctl:hover{background:var(--raised)}
+.chip.on,.ctl.on,.ctl[aria-expanded="true"]{background:var(--lime);color:var(--on-lime);border:0}
+.quickactions{padding:6px 20px 12px}
+.quickactions button{min-height:36px;padding:7px 14px;font-size:14px}
+
+/* ---------- переписка ---------- */
+.messages{padding:12px 20px 14px}
+.bubble{background:var(--bubble-in);border:0;border-radius:20px;box-shadow:none;padding:12px 16px 8px;font-size:16px;line-height:22px}
+.msg:not(.grouped) .bubble::after,.msg.user:not(.grouped) .bubble::after{display:none}
+.msg:not(.grouped) .bubble{border-bottom-left-radius:20px}
+.msg.user .bubble{background:var(--bubble-out);color:var(--bubble-out-ink);border:0}
+.msg.user:not(.grouped) .bubble{border-bottom-right-radius:20px}
+.bubble time{font-size:13px;color:var(--muted)}
+.msg.user .bubble time,.msg.user .bubble time .ico{color:var(--bubble-out-time)}
+.msgcard{background:var(--sunken);padding:12px 14px}
+.daypill span{background:var(--card);color:var(--muted);border:0}
+
+/* ---------- шторка и строка ввода (bottom-bar) ---------- */
+.dock,.dock.collapsed,#dock{background:var(--sheetbg)!important;border:0;border-radius:var(--r-sheet) var(--r-sheet) 0 0;box-shadow:0 -2px 4px rgba(0,0,0,.05);-webkit-backdrop-filter:none;backdrop-filter:none}
+:root:not([data-theme="light"]) .dock{box-shadow:0 -1px 0 var(--line)}
+.dockhandle{min-height:18px;height:18px}
+.dockhandle span{width:40px;height:3px;background:var(--handle);border-radius:32px}
+.docktitle{padding:2px 20px 8px}
+.docktitle b{font-weight:600}
+.dock.collapsed{bottom:0;padding:0}
+.composer{padding:0 20px calc(20px + env(safe-area-inset-bottom))}
+.inputbox{background:none;border:0;box-shadow:none;padding:0;gap:16px;align-items:center;-webkit-backdrop-filter:none;backdrop-filter:none}
+.inputbox .cbot{width:30px;height:32px;flex:0 0 30px;display:block;margin-left:6px}
+.inputbox textarea{font-size:18px;line-height:28px;padding:6px 0;min-height:40px;height:40px;color:var(--text)}
+.inputbox textarea::placeholder{color:var(--muted)}
+.inputbox .send{background:var(--brand);color:#fff;width:40px;height:40px;min-height:40px;margin:0;box-shadow:none}
+.circbtn,#micbtn{background:var(--card);color:#404040;width:40px;height:40px;min-height:40px;border-radius:50%;flex:0 0 40px;box-shadow:none;border:0;margin-left:0}
+:root:not([data-theme="light"]) .circbtn,:root:not([data-theme="light"]) #micbtn{background:var(--raised);color:#e5e5e7}
+.circbtn.rec,#micbtn.rec{background:var(--rec-bg);color:var(--rec-ink)}
+.glassprompt{background:var(--card);border:0;box-shadow:none;border-radius:999px;color:var(--muted);font-size:16px;height:48px;min-height:48px;-webkit-backdrop-filter:none;backdrop-filter:none}
+.dock.collapsed .voicehold,.fab,.voicehold{background:var(--brand);border:0;color:#fff;box-shadow:0 6px 18px rgba(186,48,255,.35)}
+.chatbar{background:var(--sheetbg)}
+
+/* ---------- диалоги, формы, таблицы ---------- */
+dialog{border:0;border-radius:var(--r-sheet);background:var(--surface);box-shadow:0 30px 90px var(--scrim)}
+dialog::backdrop{background:var(--scrim)}
+input,textarea,select{color:var(--text)}
+input:not([type=checkbox]):not([type=radio]):not([type=range]),select,textarea.field,.field{background:var(--control);border:0;border-radius:var(--r-ctl)}
+input::placeholder,textarea::placeholder{color:var(--muted)}
+input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid var(--ink-accent);outline-offset:1px}
+button:focus-visible{outline:2px solid var(--ink-accent);outline-offset:2px}
+table{border-collapse:collapse}
+th,td{border-color:var(--line)}
+.bar{background:var(--track)}
+.bar i{background:var(--brand)}
+.spin{border-color:var(--track);border-top-color:var(--ink-accent)}
+.up{color:var(--green)}.down{color:var(--red)}
+
+/* ---------- график ---------- */
+.chartcard{padding:0}
+.chartwrap{background:transparent}
+.cv{background:transparent}
+
+@media(min-width:701px){
+ .sidebar{border-right:1px solid var(--line);width:380px}
+ .topbar{left:26px;right:26px}
+}
+@media(prefers-reduced-motion:reduce){.story,.avatar{transition:none}}
+
+/* ---------- дымка под шапкой: плотнее, чтобы заголовок не спорил с контентом ---------- */
+.main::before{
+ height:calc(env(safe-area-inset-top,0px) + 96px);
+ -webkit-backdrop-filter:none;backdrop-filter:none;
+ -webkit-mask-image:none;mask-image:none;
+ background:linear-gradient(to bottom,var(--page) 0,var(--page) 62%,transparent 100%);
+}
+.topbar .capsule.title h2{font-size:22px;line-height:28px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* диалоги: многострочное поле — как однострочное */
+dialog textarea{background:var(--control);border:0;border-radius:var(--r-ctl)}
+dialog>*>p,dialog p.lead{font-size:15px;line-height:22px}
+
+/* поле поиска живёт внутри капсулы: своей подложки и рамки у него нет */
+.sidehead .searchbox input,.sidehead .searchbox input:focus-visible{background:none!important;border-radius:0;outline:0;box-shadow:none}
+.sidehead .searchbox:focus-within{box-shadow:0 0 0 2px var(--ink-accent)}
+
+/* облачная среда и списки настроек */
+.envhead,.browser,.ghostrow{background:var(--card);border:0;border-radius:var(--r-tile)}
+.browser{overflow:hidden}
+.browserbar{background:var(--raised)}
+.settingsrow{background:none;border-bottom:1px solid var(--line);border-radius:0}
+.settingsrow:last-child{border-bottom:0}
+.ghostrow:hover{background:var(--raised)}
+
+/* ============================================================
+   БЕЗ ОБВОДОК И РАЗДЕЛИТЕЛЕЙ НА КАРТОЧКАХ
+   Карточка держится заливкой (#f7f7f7), вложенное — белыми плитками
+   на ней, а ряды разделяет воздух. Границы делаем прозрачными, а не
+   убираем: размеры элементов остаются прежними, раскладка не прыгает.
+   ============================================================ */
+:is(.wg,.wcard,.promo,.chartcard,.stat,.hero,.runpanel,.notice,.accstrip,.riskitem,.msgcard,.wgintro,.envhead,.browser,.ghostrow,.thinrow,.pickrow,.card,.bubble) ,
+:is(.wg,.wcard,.promo,.chartcard,.stat,.hero,.runpanel,.notice,.accstrip,.riskitem,.msgcard,.wgintro,.envhead,.browser,.ghostrow,.thinrow,.pickrow,.card,.bubble) *:not(.spin):not(canvas):not(svg *){
+ border-color:transparent!important;
+ box-shadow:none;
+}
+/* вложенные плитки, которые держались на рамке, получают заливку */
+:is(.wg,.wcard,.promo,.chartcard,.msgcard,.runpanel,.accstrip,.riskitem,.wgintro) :is(.mkcell,.ticker,.wgfile,.ladstep,.inl,.seg,.num,.ricon,.badge,.imp,.impflag,.stat,.snapcell,.accell){
+ background:var(--sunken);
+}
+.mkcell.on{background:var(--lime);color:var(--on-lime)}
+.mkcell.on *{color:inherit}
+/* важность события: цвет теперь несёт заливка, а не рамка */
+.impflag.hi,.imp.hi{background:var(--rec-bg);color:var(--rec-ink)}
+.impflag.mid,.imp.mid{background:#fff3df;color:#9a5b00}
+.impflag.low,.imp.low{background:var(--sunken);color:var(--muted)}
+:root:not([data-theme="light"]) .impflag.mid,:root:not([data-theme="light"]) .imp.mid{background:#3b2c12;color:#ffc46b}
+.wgrow,.wgrow *{border-bottom-color:transparent!important}
+
+/* остатки: тикер, строки настроек */
+.ticker,.ticker *{border-color:transparent!important}
+.ticker{background:var(--card)}
+.settingsrow,.settingsrow *{border-color:transparent!important}
+
+/* ============================================================
+   ДВА СЛОЯ: нижний слой и шторка.
+   Сущностей две — дашборд и диалог. Каждая может быть и внизу, и в шторке;
+   кнопка с двумя стрелками в шапке меняет их местами.
+   Строка ввода одна, стоит поверх обоих слоёв. Ручка сидит на ней:
+   тянешь — шторка раскрывается из-под строки.
+   ============================================================ */
+.main{--peek:128px;--pill:72px}
+
+/* шапка: X, заголовок слоя, среда и обмен слоями */
+.topbar .capsule.title{margin:0 auto 0 4px}
+.topbar .capsule.title.chat h2{font-size:20px;line-height:28px}
+.topbar .capsule.actions{gap:8px;background:none;box-shadow:none;border:0;padding:0;backdrop-filter:none;-webkit-backdrop-filter:none}
+.topbar .capsule.actions .iconbtn{background:var(--card);border-radius:50%;box-shadow:none}
+:root:not([data-theme="light"]) .topbar .capsule.actions .iconbtn{background:var(--raised)}
+.topbar .capsule.lead{order:-1;background:none;box-shadow:none}
+.topbar .capsule.lead .iconbtn{background:var(--card);border-radius:50%}
+:root:not([data-theme="light"]) .topbar .capsule.lead .iconbtn{background:var(--raised)}
+.topbar .swapbtn,.docktitle .swapbtn{color:var(--ink-accent);width:44px;height:44px;min-height:44px;border:0;background:var(--card)}
+.topbar .swapbtn .ico{width:22px;height:22px;stroke-width:2}
+.topbar .capsule.title{order:0}
+
+/* строка ввода — таблетка, парит над обоими слоями */
+.main .chatbar{position:absolute;left:0;right:0;bottom:0;z-index:14;padding:0;background:none!important;pointer-events:none}
+.main.kb .chatbar{bottom:var(--kbh)}
+.chatbar .composer{
+ pointer-events:auto;position:relative;display:flex;align-items:center;gap:8px;
+ height:var(--pill);margin:0 20px calc(20px + env(safe-area-inset-bottom));padding:8px 16px 0 14px;
+ background:#fff;border-radius:999px;box-shadow:0 6px 28px rgba(0,0,0,.10),0 1px 4px rgba(0,0,0,.05);
+}
+:root:not([data-theme="light"]) .chatbar .composer{background:#2c2c2e;box-shadow:0 6px 28px rgba(0,0,0,.5)}
+.chatbar .composer .inputbox{flex:1;min-width:0;height:auto;min-height:40px;padding:0;align-items:center;background:none;border:0;gap:8px}
+.chatbar .composer .inputbox textarea{height:40px;min-height:40px;max-height:110px;padding:6px 0;font-size:18px;line-height:28px;overflow-y:auto}
+.chatbar .composer .plusbtn{width:40px;height:40px;min-height:40px;flex:0 0 40px;background:none;color:var(--text)}
+.chatbar .composer .plusbtn .ico{width:24px;height:24px;stroke-width:1.6}
+.chatbar .composer .vdiv{width:1px;height:28px;flex:0 0 1px;background:var(--line-strong)}
+.chatbar .composer .circbtn{align-self:center;background:var(--card);flex:0 0 40px}
+:root:not([data-theme="light"]) .chatbar .composer .circbtn{background:#3a3a3d}
+/* отправка появляется, когда есть что отправлять; пока пусто — микрофон */
+.chatbar .composer .sendbtn{display:none;align-self:center}
+.chatbar .composer:has(textarea:not(:placeholder-shown)) .sendbtn{display:grid}
+.chatbar .composer:has(textarea:not(:placeholder-shown)) .circbtn{display:none}
+
+/* ручка сидит на верхнем крае таблетки */
+.chatbar .composer .dockhandle{position:absolute;top:0;left:50%;transform:translateX(-50%);width:120px;height:22px;min-height:22px;display:grid;place-items:start center;padding-top:7px;z-index:2;touch-action:none}
+.chatbar .composer .dockhandle span{width:40px;height:3px;border-radius:32px;background:var(--handle)}
+
+/* шторка: белая карточка с круглыми верхними углами, растёт из-под строки */
+.main .dock,.main .dock.swapped{left:0!important;right:0!important;bottom:0!important;border:0;border-radius:var(--r-sheet) var(--r-sheet) 0 0;max-height:calc(100% - 64px);overflow:hidden;z-index:12;box-shadow:0 -4px 24px rgba(0,0,0,.08)}
+.main .dock.collapsed,.main .dock.swapped.collapsed{height:0!important;min-height:0;visibility:hidden;box-shadow:none;padding:0}
+.dock .docktitle,.dock.swapped.collapsed .docktitle{display:flex;align-items:center;gap:12px;padding:18px 20px 12px;flex-shrink:0}
+.dock .docktitle b{font-size:24px;line-height:32px;font-weight:600;letter-spacing:-.2px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dock .docktitle .iconbtn{width:44px;height:44px;min-height:44px;flex:0 0 44px;background:var(--card);border-radius:50%}
+:root:not([data-theme="light"]) .dock .docktitle .iconbtn{background:var(--raised)}
+.dock .docktitle .avatar{width:48px;height:48px;flex-basis:48px}
+.dock .messages,.dock .dockdash{padding-bottom:calc(var(--pill) + 40px + env(safe-area-inset-bottom))}
+.dock .quickactions{padding-bottom:calc(var(--pill) + 40px + env(safe-area-inset-bottom))}
+.dock .dockdash{overflow:auto;flex:1;min-height:0;padding-left:20px;padding-right:20px}
+/* диалог внизу: сообщения кончаются над таблеткой */
+.chatmain{padding-bottom:0}
+.chatmain .messages{padding:8px 20px 10px}
+.chatmain .quickactions{padding-bottom:calc(var(--pill) + 40px + env(safe-area-inset-bottom))}
+.main.kb .chatmain{padding-bottom:calc(var(--kbh))}
+.overview{padding-bottom:calc(var(--peek) + 12px)}
