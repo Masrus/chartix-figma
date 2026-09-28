@@ -800,8 +800,9 @@ function chatHTML(a){
 // Шапка шторки. Вместо крестика — обмен: экран и шторка меняются содержимым.
 // Когда в шторке рабочий стол, шапка видна и в свёрнутом виде: это его корешок с ценой.
 function dockTitleHTML(a,sw){
- // Шапка шторки: что в ней лежит, среда бота и «закрыть» — шторка уезжает вниз, остаётся только строка ввода.
- return '<div class="docktitle">'+avatar(a)+'<b class="grow'+(sw?'':' chat')+'">'+(sw?esc(a.name):'Диалог с ботом')+'</b><button class="iconbtn" aria-label="Облачная среда бота" onclick="envSheet()">'+icon('computer')+'</button><button class="iconbtn closebtn" aria-label="Свернуть шторку" onclick="setDock(\'small\')">'+icon('close')+'</button></div>'
+ // Шапка шторки: что в ней лежит и кнопка обмена слоями. Закрыть шторку — потянуть вниз за ручку или за саму шапку.
+ const swap=expanded?'':'<button class="iconbtn swapbtn" aria-label="'+(sw?'Поменять слои: дашборд вниз, диалог в шторку':'Поменять слои: диалог вниз, дашборд в шторку')+'" title="Поменять слои" onclick="swapContent()">'+icon('swap')+'</button>';
+ return '<div class="docktitle">'+avatar(a)+'<b class="grow">'+(sw?esc(a.name):'Диалог с ботом')+'</b>'+swap+'</div>'
 }
 function dockHTML(a,sw){
  const h=dock==='small'?'118px':dock==='large'?'85%':dock==='half'?'57%':dock;
@@ -1000,13 +1001,13 @@ function bindDock(){
  $('composer').onsubmit=e=>{e.preventDefault();const v=$('prompt').value.trim();if(v){$('prompt').value='';command(v);if(kb)$('prompt')?.focus()}};
  $('prompt').oninput=growPrompt;
  $('prompt').onkeydown=e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();$('composer').requestSubmit()}};
- document.querySelectorAll('.dockhandle').forEach(h=>{let start=0,height=0,moved=false;
+ document.querySelectorAll('.dockhandle,.docktitle').forEach(h=>{let start=0,height=0,moved=false,on=false;const isHandle=h.classList.contains('dockhandle');
   // Ручка на таблетке видна, пока шторка свёрнута; развернулась — тянуть дальше нужно за ручку шторки.
-  h.onpointerdown=e=>{start=e.clientY;height=$('dock').getBoundingClientRect().height;moved=false;dragging=true;h.setPointerCapture(e.pointerId);$('dock').classList.add('dragging')};
-  h.onpointermove=e=>{if(!h.hasPointerCapture(e.pointerId))return;const diff=start-e.clientY;if(Math.abs(diff)>5)moved=true;
+  h.onpointerdown=e=>{if(!isHandle&&e.target.closest('button'))return;on=true;start=e.clientY;height=$('dock').getBoundingClientRect().height;moved=false;dragging=true;h.setPointerCapture(e.pointerId);$('dock').classList.add('dragging')};
+  h.onpointermove=e=>{if(!on||!h.hasPointerCapture(e.pointerId))return;const diff=start-e.clientY;if(Math.abs(diff)>5)moved=true;
    if(moved){const max=document.querySelector('.main').clientHeight-75;setDock(Math.max(112,Math.min(max,height+diff))+'px')}};
-  h.onpointerup=e=>{try{h.releasePointerCapture(e.pointerId)}catch{}dragging=false;$('dock').classList.remove('dragging');
-   if(!moved){setDock(dock==='small'?'half':'small');return}
+  h.onpointerup=e=>{if(!on)return;on=false;try{h.releasePointerCapture(e.pointerId)}catch{}dragging=false;$('dock').classList.remove('dragging');
+   if(!moved){if(isHandle)setDock(dock==='small'?'half':'small');return}
    // Как у системных шторок: отпустили — она доезжает до ближайшей «остановки»: закрыта, средняя, высокая.
    // Тянули вверх — уходим на ступень выше, вниз — на ступень ниже; далеко утащили — берём ближайшую.
    const H=document.querySelector('.main').clientHeight,ds=[0,H*.57,H*.85],names=['small','half','large'];
