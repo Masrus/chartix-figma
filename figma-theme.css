@@ -409,7 +409,7 @@ dialog>*>p,dialog p.lead{font-size:15px;line-height:22px}
 .chatbar .composer:has(textarea:not(:placeholder-shown)) .circbtn{display:none}
 
 /* ручка сидит на верхнем крае таблетки */
-.chatbar .composer .dockhandle{position:absolute;top:0;left:50%;transform:translateX(-50%);width:120px;height:22px;min-height:22px;display:grid;place-items:start center;padding-top:7px;z-index:2;touch-action:none}
+.chatbar .composer .dockhandle{touch-action:none;cursor:grab;position:absolute;top:0;left:50%;transform:translateX(-50%);width:120px;height:22px;min-height:22px;display:grid;place-items:start center;padding-top:7px;z-index:2;touch-action:none}
 .chatbar .composer .dockhandle span{width:40px;height:3px;border-radius:32px;background:var(--handle)}
 
 /* шторка: белая карточка с круглыми верхними углами, растёт из-под строки */
@@ -444,7 +444,7 @@ dialog>*>p,dialog p.lead{font-size:15px;line-height:22px}
 
 /* когда шторка раскрыта, ручка живёт на шторке, а не на таблетке */
 .main .dock:not(.collapsed)~.chatbar .pillhandle{opacity:0;pointer-events:none}
-.dock .sheethandle{position:absolute;top:0;left:50%;transform:translateX(-50%);width:120px;height:22px;min-height:22px;display:grid;place-items:start center;padding-top:8px;z-index:3;touch-action:none}
+.dock .sheethandle{touch-action:none;cursor:grab;position:absolute;top:0;left:50%;transform:translateX(-50%);width:120px;height:22px;min-height:22px;display:grid;place-items:start center;padding-top:8px;z-index:3;touch-action:none}
 .dock .docktitle{padding-top:26px}
 
 /* тень шторки. У Apple числовых значений тени в HIG нет; за основу взят слой
@@ -474,7 +474,7 @@ dialog>*>p,dialog p.lead{font-size:15px;line-height:22px}
 /* область для перетаскивания шире самой полоски: на всю ширину шторки и выше/ниже неё */
 .dock .sheethandle{left:0;transform:none;width:100%;height:44px;min-height:44px;padding-top:8px}
 .chatbar .composer .dockhandle{left:0;transform:none;width:100%;height:20px;min-height:20px;border-radius:999px 999px 0 0;padding-top:6px}
-.chatbar .composer .dockhandle::before{content:"";position:absolute;left:0;right:0;top:-16px;height:16px}
+.chatbar .composer .dockhandle::before{content:"";position:absolute;left:0;right:0;top:-16px;height:16px;touch-action:none}
 .dock .docktitle{margin-top:14px}
 .dock .docktitle{margin-top:0;padding-top:24px}
 
