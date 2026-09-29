@@ -1001,11 +1001,15 @@ function fabHTML(){
  return '<div class="fabmic"><button type="button" class="fab" id="voicehold" aria-label="Диалог с ботом. Удерживайте для голосового ввода"><span class="fabcore">'+icon('spark')+'</span>'+icon('mic')+'</button></div>'
 }
 function toggleImmersive(){immersive=!immersive;if(!immersive)dock='small';render()}
-function setDock(size,focus=false){dock=size;if(size==='small')closeKeyboard();const el=$('dock');if(!el)return;const was=el.classList.contains('collapsed');el.style.setProperty('--dock',size==='small'?'118px':size==='peek'?'30%':size==='half'?'57%':size==='large'?'85%':size);el.classList.toggle('collapsed',size==='small');el.classList.toggle('peek',peekLike(size));
+function setDock(size,focus=false){dock=size;if(size==='small')closeKeyboard();const el=$('dock');if(!el)return;
+ const wasSmall=el.classList.contains('collapsed'),wasPeek=el.classList.contains('peek');
+ el.style.setProperty('--dock',size==='small'?'118px':size==='peek'?'30%':size==='half'?'57%':size==='large'?'85%':size);el.classList.toggle('collapsed',size==='small');el.classList.toggle('peek',peekLike(size));
  // шторка сворачивается в строку ввода: таблетка «принимает» её лёгким толчком
- if(size==='small'&&!was){const c=$('composer');if(c){c.classList.remove('blink','catch');void c.offsetWidth;c.classList.add('catch')}}
- // графики в свёрнутой шторке не рисовались — у скрытого холста нет размера
- if(was&&size!=='small')requestAnimationFrame(bindCharts);
+ if(size==='small'&&!wasSmall){const c=$('composer');if(c){c.classList.remove('blink','catch');void c.offsetWidth;c.classList.add('catch')}}
+ // Полный дашборд и его графики не рисуются, пока спрятаны — у скрытого канваса нет размера.
+ // Прячется он и при «закрыто», и при пиковом виде (там показан мини-дашборд); перерисовываем канвас,
+ // как только он открылся по-настоящему — то есть покинул оба этих состояния.
+ if((wasSmall||wasPeek)&&!peekLike(size)&&size!=='small')requestAnimationFrame(bindCharts);
  if(size==='small')requestAnimationFrame(syncPeek);
  scrollMessages();if(focus)$('prompt').focus()}
 let voiceRec=null,voiceText='',voiceTimer=0,voiceActive=false;
