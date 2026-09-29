@@ -564,9 +564,9 @@ dialog>*>p,dialog p.lead{font-size:15px;line-height:22px}
  66.6%{transform:scale(.963)}
  100%{transform:scale(1)}
 }
-.chatbar .composer.blink{animation:pillblink .72s cubic-bezier(.37,0,.63,1) both}
+.chatbar .composer.blink{animation:pillblink .72s cubic-bezier(.37,0,.63,1) backwards}
 /* шторка села на таблетку жестом: сжатие начинается, когда она почти доехала */
-.chatbar .composer.catch{animation:pillblink .72s cubic-bezier(.37,0,.63,1) .25s both}
+.chatbar .composer.catch{animation:pillblink .72s cubic-bezier(.37,0,.63,1) .25s backwards}
 @media(prefers-reduced-motion:reduce){.chatbar .composer.blink,.chatbar .composer.catch{animation:none}}
 
 /* кнопка обмена слоёв — того же цвета, что остальные иконки (#404040 / #e5e5e7 в тёмной теме), без розового */
@@ -578,3 +578,33 @@ dialog>*>p,dialog p.lead{font-size:15px;line-height:22px}
 .promo .promoclose{position:absolute;top:6px;right:6px;width:28px;height:28px;min-height:28px;flex:none;background:none;color:var(--muted)}
 .promo .promoclose .ico{width:14px;height:14px}
 .promo .promobtn{margin-top:0;width:auto}
+
+/* инпут при скролле вниз уменьшается до 60 %, при скролле вверх возвращается; якорь — нижний край */
+.chatbar .composer{transition:transform .28s cubic-bezier(.32,.72,0,1);transform-origin:50% 100%}
+.chatbar .composer.small{transform:scale(.75)}
+@media(prefers-reduced-motion:reduce){.chatbar .composer{transition:none}}
+
+/* ============================================================
+   ПИКОВЫЙ РАЗМЕР ШТОРКИ = МИНИ-ДАШБОРД
+   Между «закрыто» и «половина» появляется промежуточная остановка (30%):
+   вместо полного дашборда — одна сжатая сводка. Оба вида лежат в разметке
+   сразу, viden решает CSS по классу .peek — переключение без перерисовки,
+   поэтому работает и во время live-перетаскивания хендлера.
+   ============================================================ */
+.dockdash .minidash{display:none}
+.dockdash .fulldash{display:block}
+.dock.peek .dockdash .minidash{display:block}
+.dock.peek .dockdash .fulldash{display:none}
+.dock.peek .dockdash{overflow:hidden}
+
+/* мини-сводка: карточка «Рынки» из полного дашборда, без своего заголовка-обёртки — в пике он лишний */
+.minidash .wcard{background:none;padding:0}
+.minidash .wcard .whead{display:none}
+.minidash .mkrow{margin:0 -20px;padding:0 20px}
+
+/* мини-сводка для ботов без рынка (риск и информационные): свои компактные плашки в ряд */
+.minirow{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none}
+.minirow::-webkit-scrollbar{display:none}
+.ministat{flex:0 0 auto;min-width:104px;background:var(--card);border-radius:var(--r-tile);padding:14px 16px}
+.ministat b{display:block;font-size:22px;font-weight:600;line-height:1.2;letter-spacing:-.3px}
+.ministat small{color:var(--muted);font-size:13px}
