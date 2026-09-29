@@ -94,6 +94,7 @@ function render(){
  if(ds){const d=document.querySelector('.dockdash');if(d)d.scrollTop=ds}
  if(view==='agent'&&a){bindDock();scrollMessages();bindCharts();bindKeyboard();bindComposerMic();growPrompt()}
  if(kid&&$(kid)){const el=$(kid);if(val!==null&&el.value!==val)el.value=val;el.focus();try{el.setSelectionRange(pos,pos)}catch{}}
+ applyPill()
 }
 function sidebarHTML(){
  const q=query.trim().toLowerCase();
@@ -122,7 +123,7 @@ function rowHTML(x,q){
 }
 function emptyMain(){return '<div class="empty"><div class="emblem">'+icon('chat')+'</div><h1>Выберите бота</h1><p>Слева — ваши боты и общий компьютер. Каждый бот работает в своём диалоге.</p><button class="primary" onclick="createDialog()">Новый бот</button></div>'}
 function setQuery(v){query=v;searching?renderList():render()}
-function openAgent(id){active=id;view='agent';expanded=false;dock='small';render()}
+function openAgent(id){pillSmall=false;active=id;view='agent';expanded=false;dock='small';render()}
 function home(){view='home';expanded=false;render()}
 
 /* ---------- чат помощника ---------- */
@@ -133,13 +134,23 @@ function agentHTML(a){
  // Заголовок верхней шапки — про то, что лежит в нижнем слое; кнопка с двумя стрелками меняет слои местами.
  const title=sw?'Диалог с ботом':esc(a.name);
  const swapBtn=expanded?'':'<button class="iconbtn swapbtn" aria-label="'+(sw?'Поменять слои: дашборд вниз, диалог в шторку':'Поменять слои: диалог вниз, дашборд в шторку')+'" title="Поменять слои" onclick="swapContent()">'+icon('swap')+'</button>';
- return '<header class="topbar"><div class="capsule lead"><button class="iconbtn mobileback" aria-label="'+(expanded?'К рабочему столу бота':'К списку ботов')+'" onclick="goBack()">'+icon(expanded?'back':'close')+'</button></div>'+(expanded?'<div class="capsule mode">'+'<button class="iconbtn'+(immersive?' on':'')+'" aria-label="'+(immersive?'Вернуть панель ассистента':'Только график')+'" onclick="toggleImmersive()">'+icon('expand')+'</button>'+'</div>':'')
+ return '<header class="topbar"><div class="capsule lead"><button class="iconbtn mobileback" aria-label="'+(expanded?'К рабочему столу бота':'К списку ботов')+'" onclick="goBack()">'+icon('back')+'</button></div>'+(expanded?'<div class="capsule mode">'+'<button class="iconbtn'+(immersive?' on':'')+'" aria-label="'+(immersive?'Вернуть панель ассистента':'Только график')+'" onclick="toggleImmersive()">'+icon('expand')+'</button>'+'</div>':'')
  +'<div class="capsule title'+(sw?' chat':'')+(status&&!sw?'':' solo')+'"><div class="ttext"><h2>'+title+'</h2>'+(status&&!sw?'<p>'+status+'</p>':'')+'</div></div>'
  +'<div class="capsule actions"><button class="iconbtn" aria-label="Облачная среда бота" onclick="envSheet()">'+icon('computer')+'</button>'+swapBtn+'</div></header>'
  +(sw?'<div class="chatmain">'+chatHTML(a)+'</div>':'<div class="overview">'+dashHTML(a)+'</div>')
  +(expanded&&immersive?fabHTML():dockHTML(a,sw))+(kb?keyboardHTML():'')
 }
 // Рабочий стол бота: живёт на экране или в шторке — смотря что выбрано обменом.
+function miniDashHTML(a){
+ const k=kindOf(a);
+ if(k==='trade'){const w=marketWidget(a);if(w)return w}
+ if(k==='ops'){
+  const peers=state.agents.filter(x=>x.id!==a.id&&kindOf(x)==='trade'),busy=live();
+  return '<div class="minirow"><div class="ministat"><b>'+peers.length+'</b><small>Ботов</small></div><div class="ministat"><b>'+busy.length+'</b><small>Работают</small></div><div class="ministat"><b>'+peers.filter(x=>x.account).length+'/'+peers.length+'</b><small>Со счётом</small></div></div>'
+ }
+ const done=a.tasks.length,r=live(a.id)[0];
+ return '<div class="minirow"><div class="ministat"><b>'+done+'</b><small>Выполнено</small></div><div class="ministat"><b>'+(r?'В работе':a.paused?'Пауза':'Свободен')+'</b><small>Статус</small></div></div>'
+}
 function dashHTML(a){
  const k=kindOf(a);
  return runPanel(a)+(k==='catalog'?(expanded?chartHTML(a):catalogHTML(a)):k==='trade'?(expanded?chartHTML(a):workspaceHTML(a)):k==='ops'?riskHTML(a):infoHTML(a))
@@ -148,9 +159,9 @@ function swapContent(){
  // Обмен слоёв: старый нижний слой сжимается в карточку, у неё появляется ручка,
  // затем верхний край падает на таблетку, а ручка карточки доезжает до ручки таблетки.
  const root=document.documentElement;
- const go=()=>{swapped=!swapped;root.classList.replace('vt-old','vt-new');render()};
+ const go=()=>{swapped=!swapped;pillSmall=false;root.classList.replace('vt-old','vt-new');render()};
  const reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
- if(!document.startViewTransition||reduce){swapped=!swapped;render();return}
+ if(!document.startViewTransition||reduce){swapped=!swapped;pillSmall=false;render();return}
  // ручка карточки — отдельный элемент, живёт только в старом состоянии и едет своим путём
  if(dock==='small'&&!expanded){const m=document.querySelector('.main');if(m){const fh=document.createElement('div');fh.className='foldhandle';m.appendChild(fh)}}
  root.classList.add('vt-old');
@@ -817,11 +828,21 @@ function dockTitleHTML(a,sw){
  const swap=expanded?'':'<button class="iconbtn swapbtn" aria-label="'+(sw?'Поменять слои: дашборд вниз, диалог в шторку':'Поменять слои: диалог вниз, дашборд в шторку')+'" title="Поменять слои" onclick="swapContent()">'+icon('swap')+'</button>';
  return '<div class="docktitle">'+avatar(a)+'<b class="grow">'+(sw?esc(a.name):'Диалог с ботом')+'</b>'+swap+'</div>'
 }
+// Пиковый размер шторки: между «закрыто» и «половина». В этом диапазоне вместо полного
+// дашборда показываем сжатую версию — доска, за которую держится жест, ещё маленькая.
+function peekLike(v){
+ if(v==='peek')return true;
+ if(v==='small'||v==='half'||v==='large')return false;
+ const px=parseFloat(v),H=(document.querySelector('.main')||{}).clientHeight||800;
+ return px>0&&px<H*.44;
+}
 function dockHTML(a,sw){
- const h=dock==='small'?'118px':dock==='large'?'85%':dock==='half'?'57%':dock;
+ const h=dock==='small'?'118px':dock==='peek'?'30%':dock==='large'?'85%':dock==='half'?'57%':dock;
  // Шторка — только содержимое. Строка ввода принадлежит ассистенту и стоит поверх обоих слоёв,
  // шторка раскрывается из-под неё: ручка сидит на самой строке.
- return '<section class="dock '+(dock==='small'?'collapsed':'')+(sw?' swapped':'')+'" id="dock" style="--dock:'+h+'"><button type="button" class="dockhandle sheethandle" aria-label="Потяните вниз, чтобы свернуть шторку"><span></span></button>'+dockTitleHTML(a,sw)+(sw?'<div class="dockdash">'+dashHTML(a)+'</div>':chatHTML(a))+'</section>'
+ // Дашборд рендерится в двух видах сразу — мини и полный, — а какой из них виден, решает CSS по классу .peek.
+ // Так переключение происходит без перерисовки прямо во время перетаскивания.
+ return '<section class="dock '+(dock==='small'?'collapsed':'')+(peekLike(dock)?' peek':'')+(sw?' swapped':'')+'" id="dock" style="--dock:'+h+'"><button type="button" class="dockhandle sheethandle" aria-label="Потяните вниз, чтобы свернуть шторку"><span></span></button>'+dockTitleHTML(a,sw)+(sw?'<div class="dockdash"><div class="minidash">'+miniDashHTML(a)+'</div><div class="fulldash">'+dashHTML(a)+'</div></div>':chatHTML(a))+'</section>'
  +'<div class="chatbar" id="chatbar">'+composerHTML()+'</div>'
 }
 function composerHTML(){
@@ -980,7 +1001,7 @@ function fabHTML(){
  return '<div class="fabmic"><button type="button" class="fab" id="voicehold" aria-label="Диалог с ботом. Удерживайте для голосового ввода"><span class="fabcore">'+icon('spark')+'</span>'+icon('mic')+'</button></div>'
 }
 function toggleImmersive(){immersive=!immersive;if(!immersive)dock='small';render()}
-function setDock(size,focus=false){dock=size;if(size==='small')closeKeyboard();const el=$('dock');if(!el)return;const was=el.classList.contains('collapsed');el.style.setProperty('--dock',size==='small'?'118px':size==='half'?'57%':size==='large'?'85%':size);el.classList.toggle('collapsed',size==='small');
+function setDock(size,focus=false){dock=size;if(size==='small')closeKeyboard();const el=$('dock');if(!el)return;const was=el.classList.contains('collapsed');el.style.setProperty('--dock',size==='small'?'118px':size==='peek'?'30%':size==='half'?'57%':size==='large'?'85%':size);el.classList.toggle('collapsed',size==='small');el.classList.toggle('peek',peekLike(size));
  // шторка сворачивается в строку ввода: таблетка «принимает» её лёгким толчком
  if(size==='small'&&!was){const c=$('composer');if(c){c.classList.remove('blink','catch');void c.offsetWidth;c.classList.add('catch')}}
  // графики в свёрнутой шторке не рисовались — у скрытого холста нет размера
@@ -1025,7 +1046,7 @@ function bindDock(){
    if(!moved){if(isHandle)setDock(dock==='small'?'half':'small');return}
    // Как у системных шторок: отпустили — она доезжает до ближайшей «остановки»: закрыта, средняя, высокая.
    // Тянули вверх — уходим на ступень выше, вниз — на ступень ниже; далеко утащили — берём ближайшую.
-   const H=document.querySelector('.main').clientHeight,ds=[0,H*.57,H*.85],names=['small','half','large'];
+   const H=document.querySelector('.main').clientHeight,ds=[0,H*.30,H*.57,H*.85],names=['small','peek','half','large'];
    const near=v=>ds.reduce((b,d,i)=>Math.abs(d-v)<Math.abs(ds[b]-v)?i:b,0);
    const cur=$('dock').getBoundingClientRect().height,diff=start-e.clientY,i0=near(height);
    let t=near(cur);
@@ -2123,3 +2144,20 @@ function voice(){
 }
 $('dialog').addEventListener('click',e=>{if(e.target===$('dialog')){const r=$('dialog').getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)closeDialog()}});
 render();
+
+/* ---------- инпут уменьшается при скролле вниз и возвращается при скролле вверх ---------- */
+var pillSmall=false,pillUser=0,pillLast=new WeakMap();
+function applyPill(){const c=document.getElementById('composer');if(c)c.classList.toggle('small',!!pillSmall)}
+function setPill(v){if(pillSmall===v)return;pillSmall=v;applyPill()}
+// Реагируем только на скролл, который начал человек: автопрокрутка диалога к последнему сообщению не считается.
+['touchstart','touchmove','touchend','wheel','pointerdown','keydown'].forEach(ev=>window.addEventListener(ev,()=>{pillUser=Date.now()},{passive:true,capture:true}));
+document.addEventListener('scroll',e=>{
+ const el=e.target;if(!(el instanceof Element)||el.id==='prompt'||!el.closest('.main'))return;
+ const top=el.scrollTop,prev=pillLast.has(el)?pillLast.get(el):0;pillLast.set(el,top);
+ if(Date.now()-pillUser>1500)return;
+ const d=top-prev;
+ if(d>3&&top>8)setPill(true);       // листаем вниз — уменьшаем
+ else if(d<-3)setPill(false);       // листаем вверх — возвращаем
+},true);
+// тап по уменьшенному полю ввода возвращает размер
+document.addEventListener('focusin',e=>{if(e.target&&e.target.id==='prompt')setPill(false)});
